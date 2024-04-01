@@ -3,7 +3,7 @@
 
 char* getLocation(){
     // It should return the location here. Idk how are we gonna reveal the location
-    char* location = "none";
+    char* location = "somewhere in the colab?\n";
     return location;
 }
 
