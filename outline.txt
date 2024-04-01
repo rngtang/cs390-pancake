@@ -1,0 +1,8 @@
+Outline Ideas:
+
+Hidden location: Somewhere in the Colab
+
+Hiding the password:
+
+String obfuscation:
+    initiate the data string into a bunch of chunks
