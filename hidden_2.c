@@ -98,7 +98,7 @@ char* decrypt(char* s){
         // i+=7;
         i++;
     }
-    printf("%s \n", s);
+    // printf("%s \n", s);
 }
 
 char* make_pass() {
