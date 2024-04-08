@@ -4,7 +4,7 @@
 #include <limits.h>
 #include <stdbool.h>
 
-short key1[10] = {0xb9, 0x0c, 0x80, 0x1e, 0xb3, 0xd3, 0xda, 0x8e, 0x75, 0xfa};
+short key1[10] = {0x64, 0x0c, 0x80, 0x1e, 0xb3, 0xd3, 0xda, 0x8e, 0x75, 0xfa};
 short key2[10] = {0xff, 0x71, 0x50, 0x9b, 0x9a, 0xad, 0x53, 0xff, 0xae, 0x8e};
 short key3[10] = {0x03, 0x9a, 0x99, 0xf2, 0x97, 0xd1, 0x77, 0xd7, 0xa6, 0x3d};
 short key4[10] = {0x94, 0x84, 0x97, 0x83, 0x01, 0x3c, 0x7a, 0xf2, 0xfd, 0xb0};
@@ -14,13 +14,13 @@ short key7[10] = {0x0b, 0x4c, 0x4f, 0x8f, 0xb5, 0xfb, 0x49, 0x15, 0x9b, 0x21};
 char what[] = "9876543210987654321"; // 19 char
 char location[] = "123456789012345678";
 
-char p1[10] = {0x74, 0x68, 0x21, 0x24, 0x21, 0x24, 0x74, 0x68, 0x33, 0x70};
-char p2[10] = {0x40, 0x24, 0x24, 0x77, 0x30, 0x72, 0x64, 0x5f, 0x77, 0x33};
-char p3[10] = {0x2d, 0x40, 0x72, 0x33, 0x2f, 0x67, 0x30, 0x6e, 0x6e, 0x40};
-char p4[10] = {0x27, 0x75, 0x24, 0x33, 0x24, 0x21, 0x64, 0x6b, 0x21, 0x77};
-char p5[10] = {0x68, 0x40, 0x74, 0x2d, 0x33, 0x6c, 0x24, 0x33, 0x2b, 0x74};
-char p6[10] = {0x30, 0x27, 0x40, 0x64, 0x64, 0x2a, 0x68, 0x33, 0x72, 0x33};
-char p7[10] = {0x5e, 0x24, 0x33, 0x6e, 0x64, 0x40, 0x68, 0x33, 0x6c, 0x70};
+char p1[10] = {0x10, 0x68, 0x21, 0x24, 0x21, 0x24, 0x74, 0x68, 0x33, 0x70};
+char p2[10] = {0x24, 0x24, 0x24, 0x77, 0x30, 0x72, 0x64, 0x5f, 0x77, 0x33};
+char p3[10] = {0x49, 0x40, 0x72, 0x33, 0x2f, 0x67, 0x30, 0x6e, 0x6e, 0x40};
+char p4[10] = {0x43, 0x75, 0x24, 0x33, 0x24, 0x21, 0x64, 0x6b, 0x21, 0x77};
+char p5[10] = {0x0C, 0x40, 0x74, 0x2d, 0x33, 0x6c, 0x24, 0x33, 0x2b, 0x74};
+char p6[10] = {0x54, 0x27, 0x40, 0x64, 0x64, 0x2a, 0x68, 0x33, 0x72, 0x33};
+char p7[10] = {0x3A, 0x24, 0x33, 0x6e, 0x64, 0x40, 0x68, 0x33, 0x6c, 0x70};
 
 int useless() {
     int zero = 0;
@@ -84,19 +84,21 @@ char* getLocation(){
     return location;
 }
 
-char* encrypt(char* s){
+char* decrypt(char* s){
     int i = 0;
     int j = 0;
     while(i < strlen(s)){
-        s[i] = s[i] ^ key1[i];
-        s[i+3] = s[i+3] ^ key4[i];
-        s[i+6] = s[i+6] ^ key2[i];
-        s[i+2] = s[i+2] ^ key3[i];
-        s[i+5] = s[i+5] ^ key2[i];
-        s[i+4] = s[i+4] ^ key2[i];
-        s[i+1] = s[i+1] ^ key2[i];
-        i+=7;
+        s[i] = s[i] ^ key1[0];
+        // s[i+3] = s[i+3] ^ key4[i];
+        // s[i+6] = s[i+6] ^ key2[i];
+        // s[i+2] = s[i+2] ^ key3[i];
+        // s[i+5] = s[i+5] ^ key2[i];
+        // s[i+4] = s[i+4] ^ key2[i];
+        // s[i+1] = s[i+1] ^ key2[i];
+        // i+=7;
+        i++;
     }
+    printf("%s \n", s);
 }
 
 char* make_pass() {
@@ -108,9 +110,9 @@ char* make_pass() {
     p1[4] = p5[0];
     p1[5] = p6[0];
     p1[6] = p7[0];
-    p1[7] = 'R';
-    p1[8] = 'O';
-    p1[9] = 'J';
+    p1[7] = 0x36;
+    p1[8] = 0x2B;
+    p1[9] = 0x2E;
     return p1;
 }
 
@@ -131,18 +133,40 @@ int main(){
     // real password (garbage data): "t@-'h0^ROJ" encrypted through the ENCRYPT function
 
     char* password = make_pass();
-    encrypt(password);
-
-    puts("Enter the password: ");
-    scanf("%s", user_input);
-    encrypt(user_input);
-
-    if(!cmp(user_input, password)){
-        char* location = getLocation();
-        printf("Congratulations, the location of the secret object is: %s", location);
-    }
-    else{
-        puts("Sorry, you failed :(");
+    int sw = 1;
+    while (sw != 0){
+        switch(sw){
+            case 1:
+                decrypt(password);
+                // dca1cf97b32ebfcd
+                sw = 2;
+                break;
+            case 2:
+                puts("Enter the password: ");
+                scanf("%s", user_input);
+                // encrypt(user_input);
+                sw = 3;
+                break;
+            case 3:
+                if(!cmp(user_input, password)){
+                    sw = 4;
+                } else {
+                    sw = 5;
+                }
+                break;
+            case 4:
+                char* location = getLocation();
+                printf("Congratulations, the location of the secret object is: %s", location);
+                sw =6;
+                break;
+            case 5:
+                puts("Sorry, you failed :(");
+                sw = 6;
+                break;
+            case 6:
+                sw = 0;
+                break;
+        }
     }
 
     return 0;
