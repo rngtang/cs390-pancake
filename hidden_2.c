@@ -46,8 +46,7 @@ char* garbage(char* s) {
     int zero = useless();
     int min_len = useful(zero); // 50
     if (min_len > 48) {
-        char* res = malloc(min_len + 1);
-        strncpy(res, &s[start_index], min_len);
+        char* res = (char*)malloc(min_len + 1);
         res[min_len] = '\0';
         return res;
     }
