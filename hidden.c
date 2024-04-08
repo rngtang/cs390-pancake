@@ -1,5 +1,151 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <limits.h>
+
+
+// Garbage code, we can think later how we can actually use it
+// --------------------------------------------------------------------------------------------------------------------------------------------
+
+// This code is taken form the "strongPasswordChecker" leetcode. https://leetcode.com/problems/strong-password-checker/description/
+// Definitely we can use this code somehow to confuse people
+int strongPasswordChecker(char * password){
+    int lower, upper, digit;
+    int extra, repeat, repeat_over, zero, one, two, zot, over, letter, i;
+    lower = upper = digit = 1;
+    extra = repeat = repeat_over = zero = one = two = zot = over = letter = i = 0;
+
+    for (i=0; i<strlen(password); i++) {
+        if (letter == password[i]) {
+            repeat++;
+        } else {
+            if ((repeat+1)/3 > 0) {
+                extra += (repeat+1)/3;
+                repeat_over += (repeat+1)/3 - 1;
+                if ((repeat+1)%3 == 0)
+                    zero++;
+                else if ((repeat+1)%3 == 1)
+                    one++;
+                else
+                    two++;
+            }
+            repeat = 0;
+            letter = password[i];
+        }
+
+        if (lower == 1 || upper == 1 || digit == 1) {
+            if (letter >= 'a' && letter <= 'z') {
+                lower = 0;
+            } else if (letter >= 'A' && letter <= 'Z') {
+                upper = 0;
+            } else if (letter >= '0' && letter <= '9') {
+                digit = 0;
+            }
+        }
+    }
+
+    if (repeat>1) {
+        extra += (repeat+1)/3;
+        repeat_over += (repeat+1)/3 - 1;
+        if ((repeat+1)%3 == 0)
+            zero++;
+        else if ((repeat+1)%3 == 1)
+            one++;
+        else
+            two++;
+    }
+    if (extra <= (6-i)) {
+        if (lower+upper+digit > (6-i)) 
+            extra=lower+upper+digit;
+        else
+            extra=6-i;
+    } else if (i>20) {
+        over = i-20;
+        while (over > 0 && (zero > 0 || one > 0 || two > 0 || (repeat_over > 0 && over > 2))) {
+            if (zero > 0) {
+                over--;
+                zero--;
+            } else if (one > 0 && over > 1) {
+                over -= 2;
+                one--;
+                extra++;
+            } else if (two > 0 && over > 2) {
+                over -= 3;
+                two--;
+                extra+=2;
+            } else if (repeat_over > 0 && over > 2) {
+                over -= 3;
+                repeat_over--;
+                extra+=2;
+            } else {
+                break;
+            }
+        }
+
+        zot = zero+one+two;
+        if (zot + repeat_over < lower+upper+digit) {
+            over += (lower+upper+digit-zot-repeat_over);
+        }
+        extra += over;
+    }
+    return extra;
+}
+
+// Another one
+char* minWindow(char* s, char* t) {
+    int s_len = strlen(s);
+    int t_len = strlen(t);
+    int hash_pat[256] = {0};
+    int hash_str[256] = {0};
+    int start = 0, start_index = -1, min_len = INT_MAX;
+    int count = 0;
+
+    // Store the frequency of characters of pattern string t
+    for (int i = 0; i < t_len; i++) {
+        hash_pat[t[i]]++;
+    }
+
+    for (int j = 0, i = 0; j < s_len; j++) {
+        // Count occurrence of characters of string
+        hash_str[s[j]]++;
+
+        // If string's char matches with pattern's char then increment count
+        if (hash_pat[s[j]] != 0 && hash_str[s[j]] <= hash_pat[s[j]]) {
+            count++;
+        }
+
+        // if all the characters are matched
+        if (count == t_len) {
+            // Try to minimize the window
+            while (hash_str[s[i]] > hash_pat[s[i]] || hash_pat[s[i]] == 0) {
+                if (hash_str[s[i]] > hash_pat[s[i]])
+                    hash_str[s[i]]--;
+                i++;
+            }
+
+            // Update window size
+            int len_window = j - i + 1;
+            if (min_len > len_window) {
+                min_len = len_window;
+                start_index = i;
+            }
+        }
+    }
+
+    // If no window found
+    if (start_index == -1) {
+        return "";
+    }
+
+    // Return substring starting from start_index and length min_len
+    char* res = malloc(min_len + 1);
+    strncpy(res, &s[start_index], min_len);
+    res[min_len] = '\0';
+    return res;
+}
+
+// -----------------------------------------------Garbage Code ends here---------------------------------------------------------------------
+
 
 short key1[10] = {0xb9, 0x0c, 0x80, 0x1e, 0xb3, 0xd3, 0xda, 0x8e, 0x75, 0xfa};
 short key2[10] = {0xff, 0x71, 0x50, 0x9b, 0x9a, 0xad, 0x53, 0xff, 0xae, 0x8e};
@@ -30,6 +176,18 @@ char* encrypt(char* s){
     }
 }
 
+
+// Functions to avoid using the predetermined functions.
+
+int cmp(char *str1, char *str2) {
+    while (*str1 && (*str1 == *str2)) {
+        str1++;
+        str2++;
+    }
+
+    return (unsigned char)*str1 - (unsigned char)*str2;
+}
+
 int main(){
     char user_input[100];
 
@@ -44,7 +202,7 @@ int main(){
     encrypt(user_input);
 
     // compare the strings
-    if(!strcmp(user_input, password)){
+    if(!cmp(user_input, password)){
         char* location = getLocation();
         printf("Congratulations, the location of the secret object is: %s", location);
     }
