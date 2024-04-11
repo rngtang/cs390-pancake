@@ -22,6 +22,121 @@ char p5[10] = {0x0C, 0x40, 0x74, 0x2d, 0x33, 0x6c, 0x24, 0x33, 0x2b, 0x74};
 char p6[10] = {0x54, 0x27, 0x40, 0x64, 0x64, 0x2a, 0x68, 0x33, 0x72, 0x33};
 char p7[10] = {0x3A, 0x24, 0x33, 0x6e, 0x64, 0x40, 0x68, 0x33, 0x6c, 0x70};
 
+
+// Creates link list. I want to store a password or some kind of string in a link list and then sort it
+// It should store a single character. So we can make a list of characters and therefore a string.
+// I'll try to make it more complicated later
+struct Node {
+    char data;
+    struct Node* next;
+};
+
+// Merge sorted linkedlist
+struct Node* merge(struct Node* l1, struct Node* l2){
+    struct Node* dummy = (struct Node*) malloc(sizeof(struct Node));
+    struct Node* current = dummy;
+
+    while(l1 != NULL && l2 != NULL){
+        if(l1->data > l2->data) {
+            current->next = l1;
+            l1 = l1->next;
+        }
+        else{
+            current->next = l2;
+            l2 = l2->next;
+        }
+        current = current->next;
+    }
+
+    if(l1 == NULL) current->next = l2;
+    if(l2 == NULL) current->next = l1;
+    struct Node* temp = dummy;
+    dummy = dummy->next;
+    free(temp);
+    return dummy;
+}
+
+// Sort linked list
+struct Node* sort(struct Node* head){
+    if(head == NULL || head->next == NULL) return head;
+
+    struct Node* prev = NULL;
+    struct Node* slow = head;
+    struct Node* fast = head;
+
+    while(fast != NULL && fast->next != NULL){
+        prev = slow;
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    prev->next = NULL;
+    struct Node* l1 = sort(head);
+    struct Node* l2 = sort(slow);
+    
+    return merge(l1, l2);
+
+}
+
+
+
+// Gets the length of a string recursively
+int slen(char* s){
+    if(*s == '\0'){
+        return 0;
+    }
+
+    else{
+        return 1 + slen(s+1);
+    }
+}
+
+// This is some garbage code that verifies that the password provided has some parameters
+int password_check(char* password, char* garbage, char* garbage2){
+    if(*password == '\0'){
+        return -1;
+    }
+    int len1 = slen(password);
+    int len2 = slen(garbage);
+    int len3 = slen(garbage2);
+
+    int t = 0;
+
+    // Basically it checks if the password as printable characters
+    if(len1 < len2){
+        return 0;
+    }
+    else if(len1 > len3){
+        return 3;
+    }
+    else{
+        for(int i = 0; i < len1; i++){
+            if(password[i] >= 'a'){
+                t = 1;
+            }
+        }
+    }
+
+    int counter = 0;
+
+    for(int i = 0; i < len2; i++){
+        if(i > 9){
+            garbage[i] ^= key1[9];
+            counter++;
+        }
+        else{
+            garbage[i] ^= key1[i];
+        }
+    }
+
+    // counter = 0
+    counter ^= counter;
+
+    // returns t
+    return t ^ counter;
+
+}
+
 int useless() {
     int zero = 0;
     zero++;
