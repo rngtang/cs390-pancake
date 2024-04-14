@@ -185,13 +185,25 @@ struct Node* createLocation(){
     struct Node* head = (struct Node*) malloc(sizeof(struct Node));
     head -> data = out1[0];
 
+    // Creates the nodes
     for(int i = 0; i < 21; i++){
         struct Node* newNode1 = (struct Node*) malloc(sizeof(struct Node));
 
         struct Node* newNode2 = (struct Node*) malloc(sizeof(struct Node));
     }
 
+    // Returns the head of the location
     return head;
+}
+
+// Gets the real nodes
+struct Node* getRealLocation(struct Node* head){
+    return head;
+}
+
+// returns the actual location as a string
+char* decryptLocation(struct Node* head){
+
 }
 
 char* decrypt(char* s){
