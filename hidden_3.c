@@ -23,11 +23,19 @@ char p6[10] = {0x54, 0x27, 0x40, 0x64, 0x64, 0x2a, 0x68, 0x33, 0x72, 0x33};
 char p7[10] = {0x3A, 0x24, 0x33, 0x6e, 0x64, 0x40, 0x68, 0x33, 0x6c, 0x70};
 
 
+// Location of the object, only out1, out3, and out5 are the real location
+short out1[21] = {0x3A, 0x24, 0x33, 0x6e, 0x64, 0x40, 0x68, 0x33, 0x6c, 0x70, 0x3A, 0x24, 0x33, 0x6e, 0x64, 0x40, 0x68, 0x33, 0x6c, 0x70, 0x0};
+short out2[21] = {0x3A, 0x24, 0x33, 0x6e, 0x64, 0x40, 0x68, 0x33, 0x6c, 0x70, 0x3A, 0x24, 0x33, 0x6e, 0x64, 0x40, 0x68, 0x33, 0x6c, 0x70, 0x0};
+short out3[21] = {0x3A, 0x24, 0x33, 0x6e, 0x64, 0x40, 0x68, 0x33, 0x6c, 0x70, 0x3A, 0x24, 0x33, 0x6e, 0x64, 0x40, 0x68, 0x33, 0x6c, 0x70, 0x0};
+short out4[21] = {0x3A, 0x24, 0x33, 0x6e, 0x64, 0x40, 0x68, 0x33, 0x6c, 0x70, 0x3A, 0x24, 0x33, 0x6e, 0x64, 0x40, 0x68, 0x33, 0x6c, 0x70, 0x0};
+short out5[21] = {0x3A, 0x24, 0x33, 0x6e, 0x64, 0x40, 0x68, 0x33, 0x6c, 0x70, 0x3A, 0x24, 0x33, 0x6e, 0x64, 0x40, 0x68, 0x33, 0x6c, 0x70, 0x0};
+
+
 // Creates link list. I want to store a password or some kind of string in a link list and then sort it
 // It should store a single character. So we can make a list of characters and therefore a string.
 // I'll try to make it more complicated later
 struct Node {
-    char data;
+    short data;
     struct Node* next;
 };
 
@@ -172,28 +180,18 @@ char* garbage(char* s) {
     return s;
 }
 
-char* getLocation(){
-    location[0] = 0x3c;
-    location[1] = 0x3a;
-    location[2] = 0x2d;
-    location[3] = 0x2d;
-    location[4] = 0x68;
-    location[5] = 0x27;
-    location[6] = 0x3d;
-    location[7] = 0x3c;
-    location[8] = 0x3b;
-    location[9] = 0x21;
-    location[10] = 0x2c;
-    location[11] = 0x2d;
-    location[12] = 0x68;
-    location[13] = 0x2b;
-    location[14] = 0x27;
-    location[15] = 0x24;
-    location[16] = 0x29;
-    location[17] = 0x2A;
+// Creates the location
+struct Node* createLocation(){
+    struct Node* head = (struct Node*) malloc(sizeof(struct Node));
+    head -> data = out1[0];
 
-    xor(location);
-    return location;
+    for(int i = 0; i < 21; i++){
+        struct Node* newNode1 = (struct Node*) malloc(sizeof(struct Node));
+
+        struct Node* newNode2 = (struct Node*) malloc(sizeof(struct Node));
+    }
+
+    return head;
 }
 
 char* decrypt(char* s){
@@ -214,18 +212,7 @@ char* decrypt(char* s){
 }
 
 char* make_pass() {
-    garbage(p1);
-    p1[0] = p1[0];
-    p1[1] = p2[0];
-    p1[2] = p3[0];
-    p1[3] = p4[0];
-    p1[4] = p5[0];
-    p1[5] = p6[0];
-    p1[6] = p7[0];
-    p1[7] = 0x36;
-    p1[8] = 0x2B;
-    p1[9] = 0x2E;
-    return p1;
+
 }
 
 int cmp(char *str1, char *str2) {
@@ -239,10 +226,6 @@ int cmp(char *str1, char *str2) {
 
 int main(){
     char user_input[100];
-
-    // Temporary password?
-    // char password[70] = "th!$!$th3p @$$w0rd_w3 -@r3/g0nn@ 'u$3$!dk!w h@t-3l$3+t 0'@dd*h3r3 ^$3nd@h3lp";
-    // real password (garbage data): "t@-'h0^ROJ" encrypted through the ENCRYPT function
 
     char* password = make_pass();
     int sw = 1;
