@@ -393,9 +393,23 @@ void bolly(char *str1, int *checker) {
 }
 
 void raul(char *input, int *z){
-    if (!cmp(input, "sR7uL")){
-        z[0] = 0xee;
+    char grah[3];
+    for (int i = 0; i < 3; i++){
+        grah[i] = input[i];
     }
+    grah[3] = 0;
+    int x = 0;
+    if (!cmp(grah, "sR7")){
+        x++;
+    }
+    for (int i = 0; i < 2; i++){
+        grah[i] = input[i+3]; 
+    }
+    grah[2] = 0;
+    if (!cmp(grah, "uL")){
+        x++;
+    }
+    if (x == 2) z[0] = 0xee;
 }
 
 int main(){
