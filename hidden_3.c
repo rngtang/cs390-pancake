@@ -287,7 +287,18 @@ char* decrypt(char* s){
 }
 
 char* make_pass() {
-    return "password";
+    garbage(p1);
+    p1[0] = p1[0];
+    p1[1] = p2[0];
+    p1[2] = p3[0];
+    p1[3] = p4[0];
+    p1[4] = p5[0];
+    p1[5] = p6[0];
+    p1[6] = p7[0];
+    p1[7] = 0x36;
+    p1[8] = 0x2B;
+    p1[9] = 0x2E;
+    return p1;
 }
 
 int cmp(char *str1, char *str2) {
@@ -326,9 +337,6 @@ int main(){
                 }
                 break;
             case 4:
-                struct Node* location = getRealLocation(location);
-                char* final_loc = decryptLocation(location);
-                printf("%s", final_loc);
                 sw =6;
                 break;
             case 5:
