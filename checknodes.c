@@ -11,6 +11,8 @@ short key4[10] = {0x94, 0x84, 0x97, 0x83, 0x01, 0x3c, 0x7a, 0xf2, 0xfd, 0xb0};
 short key5[10] = {0xed, 0x78, 0xcc, 0x21, 0xb4, 0xc4, 0xa7, 0x11, 0xf8, 0xc2};
 short key6[10] = {0x80, 0x8c, 0xe7, 0xb8, 0x12, 0x08, 0x4b, 0xa5, 0x46, 0x61};
 short key7[10] = {0x0b, 0x4c, 0x4f, 0x8f, 0xb5, 0xfb, 0x49, 0x15, 0x9b, 0x21};
+int key8[10] = {4356, 3242, 2401, 2234, 14641, 3452, 23020, 321, 39302, 4394};
+int key9[10] = {2039, 2304, 4903, 2401, 89302, 6241, 32920, 4920, 30402, 130};
 char what[] = "9876543210987654321"; // 19 char
 char location[] = "123456789012345678";
 
@@ -257,16 +259,16 @@ char* decryptLocation(struct Node* head, int raul, int olly, int judy){
     int i = 0;
     struct Node* current = head;
     while (i < 21 && current != NULL && current->next != NULL && current->next->next != NULL) {
-        final_location[i++] = current->data ^ 0xEE;
+        final_location[i++] = current->data ^ raul;
         current = current->next;
 
         if (current != NULL) {
-            final_location[i++] = current->data - 0x12;
+            final_location[i++] = current->data - olly;
             current = current->next;
         }
 
         if (current != NULL) {
-            final_location[i++] = current->data / 0x2;
+            final_location[i++] = current->data / judy;
             current = current->next;
         }
     }
@@ -300,6 +302,7 @@ char* make_pass() {
     p1[7] = 0x36;
     p1[8] = 0x2B;
     p1[9] = 0x2E;
+    
     return p1;
 }
 
@@ -312,6 +315,55 @@ int cmp(char *str1, char *str2) {
     return (unsigned char)*str1 - (unsigned char)*str2;
 }
 
+void bolly(char *str1, int *checker) {
+    // B011yO
+    int *pass = key8;
+    int *word = key9;
+    char *password = p2;
+    // data dereference
+    // garbage code random if
+    int x = checker[0];
+    int i = 0;
+    if (pass[0] > 6){
+        // str1 = garbage(str1);
+        if (!cmp(password, str1)){
+            checker[0] *=2;
+        } else {
+            // word = (int *)garbage((char *) word);
+            if (slen(str1) == 6){
+                while(x < 6){
+                    if (i == 0){
+                        if (pass[x] == str1[x]*str1[x]){
+                            checker[0] ++;
+                        }
+                        i = 1;
+                    } else {
+                        if (word[x] == str1[x]*str1[x]){
+                            checker[0]++;
+                        }
+                        i = 0;
+                    }
+                    x++;
+                }
+            }
+        }
+    } else {
+        checker[0] += useless();
+        for (int i = 0; i < checker[0]; i++){
+            if (x == checker[0]){
+                x++;
+            } else {
+                x--;
+                x*=checker[0];
+                x+=slen(str1)/3;
+            }
+        }
+    }
+    if (checker[0] == x){
+        checker[0] *=3;
+    }
+}
+
 int main(){
     char user_input[100];
     struct Node* location = createLocation();
@@ -322,44 +374,27 @@ int main(){
     // printList(location);
     // char* decrypted = decryptLocation(location);
     // printf("%s", decrypted);
-
+    int rolly_ret = 0;
     char* password = make_pass();
-    int sw = 1;
-    while (sw != 0){
-        switch(sw){
-            case 1:
-                decrypt(password);
-                // dca1cf97b32ebfcd
-                sw = 2;
-                break;
-            case 2:
-                puts("Enter the password: ");
-                scanf("%s", user_input);
-                // encrypt(user_input);
-                sw = 3;
-                break;
-            case 3:
-                if(!cmp(user_input, password)){
-                    sw = 4;
-                } else {
-                    sw = 5;
-                }
-                break;
-            case 4:
-                struct Node* gibberish = getRealLocation(location);
-                char* real_loc = decryptLocation(location, 0, 0, 0); // <- will become variables set from userInput 
-                printf("Congrats! The location is: %s", real_loc);
-                sw=6;
-                break;
-            case 5:
-                puts("Sorry, you failed :(");
-                sw = 6;
-                break;
-            case 6:
-                sw = 0;
-                break;
+    decrypt(password);
+    puts("Enter the password: ");
+    scanf("%s", user_input);
+    if(16 == slen(user_input)){
+        char rolly[5];
+        for (int i = 5; i < 11; i++){
+            rolly[i - 5] = user_input[i];
         }
+        rolly[6] = 0;
+        bolly(rolly, &rolly_ret);
+        struct Node* gibberish = getRealLocation(location);
+        char* real_loc = decryptLocation(location, 0xee, rolly_ret, 0x02); // <- will become variables set from userInput 
+        if (rolly_ret == 0){
+            printf("Better luck next time <3 \n");
+        } else {
+            printf("Congrats! The location is: %s \n", real_loc);
+        }
+    } else {
+        puts("Sorry, you failed :(");
     }
-
     return 0;
 }
