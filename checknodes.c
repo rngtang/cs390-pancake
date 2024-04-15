@@ -276,7 +276,7 @@ char* decryptLocation(struct Node* head, int raul, int olly, int judy){
         return NULL;
     }
 
-    
+    return final_location;
 }
 
 char* decrypt(char* s){
@@ -315,6 +315,13 @@ int cmp(char *str1, char *str2) {
 int main(){
     char user_input[100];
     struct Node* location = createLocation();
+
+    // This is for testing purposes
+    // printList(location);
+    // getRealLocation(location);
+    // printList(location);
+    // char* decrypted = decryptLocation(location);
+    // printf("%s", decrypted);
 
     char* password = make_pass();
     int sw = 1;
