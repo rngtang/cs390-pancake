@@ -236,45 +236,67 @@ int cmp(char *str1, char *str2) {
     return (unsigned char)*str1 - (unsigned char)*str2;
 }
 
+void bolly(char *str1, int checker) {
+    int pass = key1[0];
+    // data dereference
+    // garbage code random if
+    int x = checker;
+    if (checker > 21){
+        str1 = garbage(str1);
+        
+    } else {
+        checker += useless();
+        for (int i = 0; i < checker; i++){
+            if (x == checker){
+                x++;
+            } else {
+                x--;
+                x*=checker;
+                x+=slen(str1)/3;
+            }
+        }
+    }
+}
+
 int main(){
     char user_input[100];
 
-    char* password = make_pass();
-    int sw = 1;
-    while (sw != 0){
-        switch(sw){
-            case 1:
-                decrypt(password);
-                // dca1cf97b32ebfcd
-                sw = 2;
-                break;
-            case 2:
-                puts("Enter the password: ");
-                scanf("%s", user_input);
-                // encrypt(user_input);
-                sw = 3;
-                break;
-            case 3:
-                if(!cmp(user_input, password)){
-                    sw = 4;
-                } else {
-                    sw = 5;
-                }
-                break;
-            case 4:
-                char* location = getLocation();
-                printf("Congratulations, the location of the secret object is: %s", location);
-                sw =6;
-                break;
-            case 5:
-                puts("Sorry, you failed :(");
-                sw = 6;
-                break;
-            case 6:
-                sw = 0;
-                break;
-        }
-    }
+    // char* password = make_pass();
+    // int sw = 1;
+    // while (sw != 0){
+    //     switch(sw){
+    //         case 1:
+    //             decrypt(password);
+    //             // dca1cf97b32ebfcd
+    //             sw = 2;
+    //             break;
+    //         case 2:
+    //             puts("Enter the password: ");
+    //             scanf("%s", user_input);
+    //             // encrypt(user_input);
+    //             sw = 3;
+    //             break;
+    //         case 3:
+    //             if(!cmp(user_input, password)){
+    //                 sw = 4;
+    //             } else {
+    //                 sw = 5;
+    //             }
+    //             break;
+    //         case 4:
+    //             char* location = getLocation();
+    //             printf("Congratulations, the location of the secret object is: %s", location);
+    //             sw =6;
+    //             break;
+    //         case 5:
+    //             puts("Sorry, you failed :(");
+    //             sw = 6;
+    //             break;
+    //         case 6:
+    //             sw = 0;
+    //             break;
+    //     }
+    // }
 
     return 0;
 }
