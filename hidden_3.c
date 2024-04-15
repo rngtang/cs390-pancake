@@ -86,6 +86,16 @@ struct Node* sort(struct Node* head){
 
 }
 
+void printList(struct Node* head){
+    struct Node* temp = head;
+    while(head != NULL){
+        printf("%d \n", head->data);
+        temp = head;
+        head = head->next;
+        free(temp);
+    }
+    free(head);
+}
 
 
 // Gets the length of a string recursively
@@ -182,28 +192,89 @@ char* garbage(char* s) {
 
 // Creates the location
 struct Node* createLocation(){
+
+    // Creates the first nodes
     struct Node* head = (struct Node*) malloc(sizeof(struct Node));
     head -> data = out1[0];
 
-    // Creates the nodes
-    for(int i = 0; i < 21; i++){
-        struct Node* newNode1 = (struct Node*) malloc(sizeof(struct Node));
+    struct Node* newNode1 = (struct Node*) malloc(sizeof(struct Node));
+    newNode1 -> data = out3[0];
+    head -> next = newNode1;
 
-        struct Node* newNode2 = (struct Node*) malloc(sizeof(struct Node));
+    struct Node* newNode2 = (struct Node*) malloc(sizeof(struct Node));
+    newNode2 -> data = out5[0];
+    newNode1 -> next = newNode2;
+    newNode2 -> next = NULL;
+
+    struct Node* current = newNode2;
+
+    // Creates the nodes
+    for(int i = 1; i < 21; i++){
+        struct Node* real = (struct Node*) malloc(sizeof(struct Node));
+        real -> data = out1[i];
+        current -> next = real;
+        current = current -> next;
+
+        struct Node* fake1 = (struct Node*) malloc(sizeof(struct Node));
+        fake1 -> data = out3[i];
+        current -> next = fake1;
+        current = current -> next;
+
+        struct Node* fake2 = (struct Node*) malloc(sizeof(struct Node));
+        fake2 -> data = out5[i];
+        fake2 -> next = NULL;
+        current -> next = fake2;
+        current = current -> next;
+
     }
 
     // Returns the head of the location
     return head;
 }
 
-// Gets the real nodes
+// Filters the linked list to get the real nodes
 struct Node* getRealLocation(struct Node* head){
-    return head;
+    struct Node* dummy = head;
+    struct Node* current = head;
+
+    for(int i = 0; i < 21; i++){
+        current -> next = current -> next -> next -> next;
+        current = current -> next;
+    }
+
+    return dummy;
 }
 
 // returns the actual location as a string
 char* decryptLocation(struct Node* head){
+    if (head == NULL) return NULL;
 
+    char* final_location = malloc(21 * sizeof(char));
+    if (final_location == NULL) return NULL; // Check if malloc failed
+
+    int i = 0;
+    struct Node* current = head;
+    while (i < 21 && current != NULL && current->next != NULL && current->next->next != NULL) {
+        final_location[i++] = current->data ^ 0xEE;
+        current = current->next;
+
+        if (current != NULL) {
+            final_location[i++] = current->data - 0x12;
+            current = current->next;
+        }
+
+        if (current != NULL) {
+            final_location[i++] = current->data / 0x2;
+            current = current->next;
+        }
+    }
+
+    if (i < 21) { // Not enough data to fill the array
+        free(final_location);
+        return NULL;
+    }
+
+    
 }
 
 char* decrypt(char* s){
@@ -211,20 +282,12 @@ char* decrypt(char* s){
     int j = 0;
     while(i < strlen(s)){
         s[i] = s[i] ^ key1[0];
-        // s[i+3] = s[i+3] ^ key4[i];
-        // s[i+6] = s[i+6] ^ key2[i];
-        // s[i+2] = s[i+2] ^ key3[i];
-        // s[i+5] = s[i+5] ^ key2[i];
-        // s[i+4] = s[i+4] ^ key2[i];
-        // s[i+1] = s[i+1] ^ key2[i];
-        // i+=7;
         i++;
     }
-    // printf("%s \n", s);
 }
 
 char* make_pass() {
-
+    return "password";
 }
 
 int cmp(char *str1, char *str2) {
@@ -260,43 +323,45 @@ void bolly(char *str1, int checker) {
 
 int main(){
     char user_input[100];
+    struct Node* location = createLocation();
 
-    // char* password = make_pass();
-    // int sw = 1;
-    // while (sw != 0){
-    //     switch(sw){
-    //         case 1:
-    //             decrypt(password);
-    //             // dca1cf97b32ebfcd
-    //             sw = 2;
-    //             break;
-    //         case 2:
-    //             puts("Enter the password: ");
-    //             scanf("%s", user_input);
-    //             // encrypt(user_input);
-    //             sw = 3;
-    //             break;
-    //         case 3:
-    //             if(!cmp(user_input, password)){
-    //                 sw = 4;
-    //             } else {
-    //                 sw = 5;
-    //             }
-    //             break;
-    //         case 4:
-    //             char* location = getLocation();
-    //             printf("Congratulations, the location of the secret object is: %s", location);
-    //             sw =6;
-    //             break;
-    //         case 5:
-    //             puts("Sorry, you failed :(");
-    //             sw = 6;
-    //             break;
-    //         case 6:
-    //             sw = 0;
-    //             break;
-    //     }
-    // }
+    char* password = make_pass();
+    int sw = 1;
+    while (sw != 0){
+        switch(sw){
+            case 1:
+                decrypt(password);
+                // dca1cf97b32ebfcd
+                sw = 2;
+                break;
+            case 2:
+                puts("Enter the password: ");
+                scanf("%s", user_input);
+                // encrypt(user_input);
+                sw = 3;
+                break;
+            case 3:
+                if(!cmp(user_input, password)){
+                    sw = 4;
+                } else {
+                    sw = 5;
+                }
+                break;
+            case 4:
+                struct Node* location = getRealLocation(location);
+                char* final_loc = decryptLocation(location);
+                printf("%s", final_loc);
+                sw =6;
+                break;
+            case 5:
+                puts("Sorry, you failed :(");
+                sw = 6;
+                break;
+            case 6:
+                sw = 0;
+                break;
+        }
+    }
 
     return 0;
 }
