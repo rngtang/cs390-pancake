@@ -394,7 +394,6 @@ void bolly(char *str1, int *checker) {
 
 void raul(char *input, int *z){
     if (!cmp(input, "sR7uL")){
-        printf("True");
         z[0] = 0xee;
     }
 }
@@ -413,7 +412,7 @@ int main(){
 
     if(16 == slen(user_input)){ // Chekc length
         char RAUL[5];
-        for (int i = 0; i < 4; i++){
+        for (int i = 0; i < 5; i++){
             RAUL[i] = user_input[i];
         }
         RAUL[5] = 0;
