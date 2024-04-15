@@ -398,12 +398,12 @@ int main(){
 
     int rolly_ret = 0;
     int judy_hehe = 0;
-    char* password = make_pass();
+    char* password = make_pass(); //all this password stuff useless
     decrypt(password);
     puts("Enter the password: ");
     scanf("%s", user_input);
 
-    if(16 == slen(user_input)){
+    if(16 == slen(user_input)){ // Chekc length
         char rolly[6];
         for (int i = 5; i < 11; i++){
             rolly[i - 5] = user_input[i];
@@ -417,11 +417,8 @@ int main(){
         }
         JUDY[6] = 0;
 
-        // printf("%s \n", rolly);
-        // printf("%s \n", JUDY);
         int udy = judy(JUDY, &judy_hehe); // JUDY = "Ju9yM"
-        // printf("%d", udy);
-        // printf("%d", judy_hehe);
+
         // sR7uLB011yOJu9yM
 
         struct Node* gibberish = getRealLocation(location);
