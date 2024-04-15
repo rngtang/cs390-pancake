@@ -392,18 +392,33 @@ void bolly(char *str1, int *checker) {
     }
 }
 
+void raul(char *input, int *z){
+    if (!cmp(input, "sR7uL")){
+        printf("True");
+        z[0] = 0xee;
+    }
+}
+
 int main(){
     char user_input[100];
     struct Node* location = createLocation();
 
     int rolly_ret = 0;
     int judy_hehe = 0;
+    int raul_yay = 0;
     char* password = make_pass(); //all this password stuff useless
     decrypt(password);
     puts("Enter the password: ");
     scanf("%s", user_input);
 
     if(16 == slen(user_input)){ // Chekc length
+        char RAUL[5];
+        for (int i = 0; i < 4; i++){
+            RAUL[i] = user_input[i];
+        }
+        RAUL[5] = 0;
+        raul(RAUL, &raul_yay); //check first password, modify z
+
         char rolly[6];
         for (int i = 5; i < 11; i++){
             rolly[i - 5] = user_input[i];
@@ -422,8 +437,8 @@ int main(){
         // sR7uLB011yOJu9yM
 
         struct Node* gibberish = getRealLocation(location);
-        char* real_loc = decryptLocation(location, 0xee, rolly_ret, judy_hehe); // <- will become variables set from userInput 
-        if (rolly_ret == 0 || udy == -1){ // udy is never -1 so fake check from JUDY
+        char* real_loc = decryptLocation(location, raul_yay, rolly_ret, judy_hehe); // <- will become variables set from userInput 
+        if (rolly_ret == 0 || udy == -1 || raul_yay ==0){ // udy is never -1 so fake check from JUDY
                 printf("Better luck next time <3 \n");
         } else {
             printf("Congrats! The location is: %s \n", real_loc);
