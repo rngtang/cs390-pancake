@@ -101,7 +101,6 @@ void printList(struct Node* head){
     free(head);
 }
 
-
 // Gets the length of a string recursively
 int slen(char* s){
     if(*s == '\0'){
@@ -157,68 +156,6 @@ int password_check(char* password, char* garbage, char* garbage2){
     // returns t
     return t ^ counter;
 
-}
-
-const char* apple = "th3 bE$t 1"; 
-const char* orange = "A s01iD pi(k"; 
-const char* grape = "Ac7uAl1y my d@d 1ik*$ th3s3 th8 M0$t"; 
-const char* strawberry = "9/10"; 
-const char* tomato = "d0es th^$ f1t?"; 
-const char* fig = "1 &u3$s Ju$t 0Ka?";
-
-int useless() { 
-    int zero = 0;
-    zero++;
-    zero = zero*2;
-    zero++;
-    zero = zero-3;
-    return zero; // always 0
-}
-
-int useful(int x) {
-    int what = 0;
-    for (int i=x; i<x+100; i++) {
-        if (i*2 == 100) {
-            what = i;
-            break;
-        }
-    }
-    return what; // always 50
-}
-
-char* garbage(char* s) {
-    int zero = useless();
-    int min_len = useful(zero); // 50
-    if (min_len > 48) {
-        char* res = (char*)malloc(min_len + 1);
-        res[min_len] = '\0';
-        return res;
-    }
-    return s;
-}
-
-int judy(char* chunk, int* x) { // checking for "Ju9yM"
-    // printf("%n", what);
-    //     // sR7uLB011yOJu9yM
-    // int x = 0;
-    char* noChange = garbage(chunk);
-    if (chunk[0] == fig[8]) {
-        x[0]++; // 1
-    }
-    if (chunk[1] == grape[3]) {
-        x[0] = x[0]*4; // 4
-    }
-    if (chunk[2] == strawberry[0]) {
-        x[0] = x[0]%3; // 1
-    }
-    if (chunk[3] == grape[7]) {
-        x[0]--; // 0
-    }
-    if (chunk[4] == grape[32]) {
-        x[0]=x[0]+2; // 2
-    }
-
-    return -3;
 }
 
 // Creates the location
@@ -317,7 +254,7 @@ char* decrypt(char* s){
     }
 }
 
-char* make_pass() {
+char* make_pass() { // not used 
     garbage(p1);
     p1[0] = p1[0];
     p1[1] = p2[0];
@@ -342,6 +279,67 @@ int cmp(char *str1, char *str2) {
     return (unsigned char)*str1 - (unsigned char)*str2;
 }
 
+// Start of JUDY's 
+const char* apple = "th3 bE$t 1"; 
+const char* orange = "A s01iD pi(k"; 
+const char* grape = "Ac7uAl1y my d@d 1ik*$ th3s3 th8 M0$t"; 
+const char* strawberry = "9/10"; 
+const char* tomato = "d0es th^$ f1t?"; 
+const char* fig = "1 &u3$s Ju$t 0Ka?";
+
+int useless() { 
+    int zero = 0;
+    zero++;
+    zero = zero*2;
+    zero++;
+    zero = zero-3;
+    return zero; // always 0
+}
+
+int useful(int x) {
+    int what = 0;
+    for (int i=x; i<x+100; i++) {
+        if (i*2 == 100) {
+            what = i;
+            break;
+        }
+    }
+    return what; // always 50
+}
+
+char* garbage(char* s) {
+    int zero = useless();
+    int min_len = useful(zero); // 50
+    if (min_len > 48) {
+        char* res = (char*)malloc(min_len + 1);
+        res[min_len] = '\0';
+        return res;
+    }
+    return s; // doesn't change char* s at all
+}
+
+int judy(char* chunk, int* x) { // checking for "Ju9yM"
+    char* noChange = garbage(chunk);
+    if (chunk[0] == fig[8]) {
+        x[0]++; // 1
+    }
+    if (chunk[1] == grape[3]) {
+        x[0] = x[0]*4; // 4
+    }
+    if (chunk[2] == strawberry[0]) {
+        x[0] = x[0]%3; // 1
+    }
+    if (chunk[3] == grape[7]) {
+        x[0]--; // 0
+    }
+    if (chunk[4] == grape[32]) {
+        x[0]=x[0]+2; // 2
+    }
+
+    return -3;
+}
+
+// start of OLLY's
 void bolly(char *str1, int *checker) {
     // B011yO
     int *pass = key8;
@@ -405,28 +403,29 @@ int main(){
     scanf("%s", user_input);
 
     if(16 == slen(user_input)){
-        char rolly[5];
+        char rolly[6];
         for (int i = 5; i < 11; i++){
             rolly[i - 5] = user_input[i];
         }
-        rolly[6] = 0;
+        rolly[6] = 0; // end in '\n'
+        bolly(rolly, &rolly_ret); // rolly = "B011yO"
 
-        char JUDY[5];
+        char JUDY[6];
         for (int j=11; j<16; j++) {
             JUDY[j-11] = user_input[j];
         }
         JUDY[6] = 0;
 
-        bolly(rolly, &rolly_ret);
-        int udy = judy(JUDY, &judy_hehe);
+        // printf("%s \n", rolly);
+        // printf("%s \n", JUDY);
+        int udy = judy(JUDY, &judy_hehe); // JUDY = "Ju9yM"
         // printf("%d", udy);
         // printf("%d", judy_hehe);
-
         // sR7uLB011yOJu9yM
 
         struct Node* gibberish = getRealLocation(location);
         char* real_loc = decryptLocation(location, 0xee, rolly_ret, judy_hehe); // <- will become variables set from userInput 
-        if (rolly_ret == 0 || udy == -1){ // udy is never -1 lol 
+        if (rolly_ret == 0 || udy == -1){ // udy is never -1 so fake check from JUDY
             printf("Better luck next time <3 \n");
         } else {
             printf("Congrats! The location is: %s \n", real_loc);
