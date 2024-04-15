@@ -254,6 +254,17 @@ char* decrypt(char* s){
     }
 }
 
+char *garbage(char* s) {
+    int zero = useless();
+    int min_len = useful(zero); // 50
+    if (min_len > 48) {
+        char* res = (char*)malloc(min_len + 1);
+        res[min_len] = '\0';
+        return res;
+    }
+    return s; // doesn't change char* s at all
+}
+
 char* make_pass() { // not used 
     garbage(p1);
     p1[0] = p1[0];
@@ -307,16 +318,7 @@ int useful(int x) {
     return what; // always 50
 }
 
-char* garbage(char* s) {
-    int zero = useless();
-    int min_len = useful(zero); // 50
-    if (min_len > 48) {
-        char* res = (char*)malloc(min_len + 1);
-        res[min_len] = '\0';
-        return res;
-    }
-    return s; // doesn't change char* s at all
-}
+
 
 int judy(char* chunk, int* x) { // checking for "Ju9yM"
     char* noChange = garbage(chunk);
@@ -345,14 +347,13 @@ void bolly(char *str1, int *checker) {
     int *pass = key8;
     int *word = key9;
     char *password = p2;
-    // data dereference
-    // garbage code random if
+    // garbage code opaque if
     int x = checker[0];
     int i = 0;
     if (pass[0] > 6){
         // str1 = garbage(str1);
-        if (!cmp(password, str1)){
-            checker[0] *=2;
+        if (!cmp(password, str1)){ 
+            checker[0] *=2; // fake compare 
         } else {
             // word = (int *)garbage((char *) word);
             if (slen(str1) == 6){
@@ -426,7 +427,7 @@ int main(){
         struct Node* gibberish = getRealLocation(location);
         char* real_loc = decryptLocation(location, 0xee, rolly_ret, judy_hehe); // <- will become variables set from userInput 
         if (rolly_ret == 0 || udy == -1){ // udy is never -1 so fake check from JUDY
-            printf("Better luck next time <3 \n");
+                printf("Better luck next time <3 \n");
         } else {
             printf("Congrats! The location is: %s \n", real_loc);
         }
