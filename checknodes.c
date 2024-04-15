@@ -361,6 +361,8 @@ void bolly(char *str1, int *checker) {
     }
     if (checker[0] == x){
         checker[0] *=3;
+    } else {
+        checker[0] = 0;
     }
 }
 
