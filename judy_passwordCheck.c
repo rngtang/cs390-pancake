@@ -55,18 +55,28 @@ int judy(char* chunk) { // checking for "Ju9yM"
     char* noChange = garbage(chunk);
     if (chunk[0] == fig[8]) {
         x++; // 1
+    } else {
+        x = x*8;
     }
     if (chunk[1] == grape[3]) {
         x = x*4; // 4
+    } else {
+        x = x^4;
     }
     if (chunk[2] == strawberry[0]) {
         x = x%3; // 1
+    } else {
+        x = x%5;
     }
     if (chunk[3] == grape[7]) {
         x--; // 0
+    } else {
+        x = x-9;
     }
     if (chunk[4] == grape[32]) {
         x=x+2; // 2
+    } else {
+        x=x++;
     }
 
     return x;
