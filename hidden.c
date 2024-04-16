@@ -393,10 +393,13 @@ void bolly(char *str1, int *checker) {
 
 // Makes a recursive call to get a hash value
 int helper(struct Node* head, int depth){
+    // Base case
     if(head == NULL){
         return 1;
     }
 
+    // hash value = current.data ^ ((current.next.data ^ (current.next.next.data ^ ...) * depth+2) * depth+1) * depth
+    // Makes the recursive call
     return ((head -> data ^ helper(head->next, depth+1)) * depth);
 
 }
@@ -418,17 +421,15 @@ void raul(char *input, int *z){
         current = current -> next;
     }
     
+    // Calls the helper method
     int depth = 1;
+    // In theory each string of length 5 has a unique hash value, if the correct hash value is returned, then 0xee is stored into z
     z[0] = helper(head, depth) - 0x2ECF;
 }
 
 int main(){
     char user_input[100];
     struct Node* location = createLocation();
-
-    // int raul_yay = 0;
-    // char* r = "sR7uL";
-    // raul(r, &raul_yay); //check first password, modify z
 
     int rolly_ret = 0;
     int judy_hehe = 0;
