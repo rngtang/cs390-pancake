@@ -206,9 +206,31 @@ struct Node* getRealLocation(struct Node* head){
     struct Node* dummy = head;
     struct Node* current = head;
 
-    for(int i = 0; i < 21; i++){
-        current -> next = current -> next -> next -> next;
-        current = current -> next;
+    int sw = 3;
+    int i = 0;
+    while(sw != 0){
+        switch (sw){
+            case 1:
+                sw = 0;
+                break;
+            case 2:
+                current = current -> next;
+                i++;
+                sw = 3;
+                break;
+            case 3:
+                if(i < 21){
+                    sw = 4;
+                }
+                else{
+                    sw = 1;
+                }
+                break;
+            case 4:
+                current -> next = current -> next -> next -> next;
+                sw = 2;
+                break;
+        }
     }
 
     return dummy;
@@ -413,12 +435,34 @@ void raul(char *input, int *z){
     head -> next = NULL;
 
     struct Node* current = head;
+    struct Node* newNode = head;
     for(int i = 1; i < len; i++){
-        struct Node* newNode = (struct Node*) malloc(sizeof(struct Node));
-        newNode -> data = input[i];
-        newNode -> next = NULL;
-        current -> next = newNode;
-        current = current -> next;
+        int sw = 3;
+        while(sw != 0){
+            switch (sw){
+                case 1:
+                    newNode -> data = input[i];
+                    sw = 4;
+                    break;
+                
+                case 2:
+                    current -> next = newNode;
+                    sw = 5;
+                    break;
+                case 3:
+                    newNode = (struct Node*) malloc(sizeof(struct Node));
+                    sw = 1;
+                    break;
+                case 4:
+                    newNode -> next = NULL;
+                    sw = 2;
+                    break;
+                case 5:
+                    current = current -> next;
+                    sw = 0;
+                    break;
+            }
+        }
     }
     
     // Calls the helper method
