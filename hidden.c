@@ -241,28 +241,69 @@ char* decryptLocation(struct Node* head, int raul, int olly, int judy){
     if (head == NULL) return NULL;
 
     char* final_location = malloc(21 * sizeof(char));
-    if (final_location == NULL) return NULL; // Check if malloc failed
-
     int i = 0;
     struct Node* current = head;
-    while (i < 21 && current != NULL && current->next != NULL && current->next->next != NULL) {
-        final_location[i++] = current->data ^ raul;
-        current = current->next;
+    int sw = 5;
 
-        if (current != NULL) {
-            final_location[i++] = current->data - olly;
-            current = current->next;
+    while(sw != 0){
+        switch (sw){
+            case 1:
+                if(current != NULL){
+                    sw = 7;
+                }
+                break;
+            
+            case 2:
+                final_location[i++] = current->data ^ raul;
+                current = current->next;
+                sw = 1;
+                break;
+            case 3:
+                if(i > 21 && current == NULL && current->next == NULL && current->next->next == NULL){
+                    sw = 2;
+                    printf("This is a surprise");
+                }
+                else{
+                    sw = 6;
+                }
+                break;
+            case 4:
+                final_location[i++] = current->data - raul;
+                current = current->next;
+                sw = 1;
+                break;
+            case 5:
+                if(i < 21 && current != NULL && current->next != NULL && current->next->next != NULL){
+                    sw = 2;
+                }
+                else{
+                    sw = 6;
+                }
+                break;
+            case 6:
+                sw = 0;
+                break;
+            case 7:
+                final_location[i++] = current->data - olly;
+                current = current->next;
+                sw = 10;
+                break;
+            case 8:
+                final_location[i++] = current->data / judy;
+                current = current->next;
+                sw = 5;
+                break;
+            case 9:
+                final_location[i++] = current->data - raul ^ judy / olly;
+                sw = 0;
+                break;
+            case 10: 
+                if(current != NULL){
+                    sw = 8;
+                }
+                break;
+        
         }
-
-        if (current != NULL) {
-            final_location[i++] = current->data / judy;
-            current = current->next;
-        }
-    }
-
-    if (i < 21) { // Not enough data to fill the array
-        free(final_location);
-        return NULL;
     }
 
     return final_location;
