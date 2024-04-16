@@ -391,19 +391,17 @@ void bolly(char *str1, int *checker) {
     }
 }
 
-int helper(struct Node* head){
-    // has to be = 0x44
-    int result = 0;
-    int i = 1;
-    while(head != NULL){
-        result = (result ^ head->data) * i;
-        head = head->next;
-        i++;
+// Makes a recursive call to get a hash value
+int helper(struct Node* head, int depth){
+    if(head == NULL){
+        return 1;
     }
 
-    return result - 0x1786;
+    return head -> data ^ (head->next, depth+1) * depth;
+
 }
 
+// Calculates the 0xee
 void raul(char *input, int *z){
     int len = slen(input);
     // Converts the input string to a linked list
@@ -420,7 +418,8 @@ void raul(char *input, int *z){
         current = current -> next;
     }
     
-    z[0] = helper(head);
+    int depth = 1;
+    z[0] = helper(head, depth) + 0x7d;
 }
 
 int main(){
