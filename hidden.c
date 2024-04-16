@@ -397,7 +397,7 @@ int helper(struct Node* head, int depth){
         return 1;
     }
 
-    return (head -> data ^ helper(head->next, depth+1) * depth);
+    return ((head -> data ^ helper(head->next, depth+1)) * depth);
 
 }
 
@@ -419,7 +419,7 @@ void raul(char *input, int *z){
     }
     
     int depth = 1;
-    z[0] = helper(head, depth) - 0x6bb;
+    z[0] = helper(head, depth) - 0x2ECF;
 }
 
 int main(){
