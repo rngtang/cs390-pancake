@@ -397,7 +397,7 @@ int helper(struct Node* head, int depth){
         return 1;
     }
 
-    return head -> data ^ (head->next, depth+1) * depth;
+    return (head -> data ^ helper(head->next, depth+1) * depth);
 
 }
 
@@ -419,12 +419,16 @@ void raul(char *input, int *z){
     }
     
     int depth = 1;
-    z[0] = helper(head, depth) + 0x7d;
+    z[0] = helper(head, depth) - 0x6bb;
 }
 
 int main(){
     char user_input[100];
     struct Node* location = createLocation();
+
+    // int raul_yay = 0;
+    // char* r = "sR7uL";
+    // raul(r, &raul_yay); //check first password, modify z
 
     int rolly_ret = 0;
     int judy_hehe = 0;
