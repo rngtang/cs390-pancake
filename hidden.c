@@ -34,7 +34,6 @@ short out3[21] = {0x3A, 0x24, 0x33, 0x6e, 0x64, 0x40, 0x68, 0x33, 0x6c, 0x70, 0x
 short out4[21] = {0x3A, 0x24, 0x33, 0x6e, 0x64, 0x40, 0x68, 0x33, 0x6c, 0x70, 0x3A, 0x24, 0x33, 0x6e, 0x64, 0x40, 0x68, 0x33, 0x6c, 0x70, 0x0};
 short out5[21] = {0x3A, 0x24, 0x33, 0x6e, 0x64, 0x40, 0x68, 0x33, 0x6c, 0x70, 0x3A, 0x24, 0x33, 0x6e, 0x64, 0x40, 0x68, 0x33, 0x6c, 0x70, 0x0};
 
-
 // Creates link list. I want to store a password or some kind of string in a link list and then sort it
 // It should store a single character. So we can make a list of characters and therefore a string.
 // I'll try to make it more complicated later
@@ -92,11 +91,13 @@ struct Node* sort(struct Node* head){
 
 void printList(struct Node* head){
     struct Node* temp = head;
+    int i = 0;
     while(head != NULL){
-        printf("%d \n", head->data);
+        printf("%d: %d \n", i, head->data);
         temp = head;
         head = head->next;
         free(temp);
+        i++;
     }
     free(head);
 }
@@ -245,6 +246,26 @@ char* decryptLocation(struct Node* head, int raul, int olly, int judy){
     return final_location;
 }
 
+int useless() { 
+    int zero = 0;
+    zero++;
+    zero = zero*2;
+    zero++;
+    zero = zero-3;
+    return zero; // always 0
+}
+
+int useful(int x) {
+    int what = 0;
+    for (int i=x; i<x+100; i++) {
+        if (i*2 == 100) {
+            what = i;
+            break;
+        }
+    }
+    return what; // always 50
+}
+
 char* decrypt(char* s){
     int i = 0;
     int j = 0;
@@ -297,28 +318,6 @@ const char* grape = "Ac7uAl1y my d@d 1ik*$ th3s3 th8 M0$t";
 const char* strawberry = "9/10"; 
 const char* tomato = "d0es th^$ f1t?"; 
 const char* fig = "1 &u3$s Ju$t 0Ka?";
-
-int useless() { 
-    int zero = 0;
-    zero++;
-    zero = zero*2;
-    zero++;
-    zero = zero-3;
-    return zero; // always 0
-}
-
-int useful(int x) {
-    int what = 0;
-    for (int i=x; i<x+100; i++) {
-        if (i*2 == 100) {
-            what = i;
-            break;
-        }
-    }
-    return what; // always 50
-}
-
-
 
 int judy(char* chunk, int* x) { // checking for "Ju9yM"
     char* noChange = garbage(chunk);
@@ -392,24 +391,36 @@ void bolly(char *str1, int *checker) {
     }
 }
 
+int helper(struct Node* head){
+    // has to be = 0x44
+    int result = 0;
+    int i = 1;
+    while(head != NULL){
+        result = (result ^ head->data) * i;
+        head = head->next;
+        i++;
+    }
+
+    return result - 0x1786;
+}
+
 void raul(char *input, int *z){
-    char grah[3];
-    for (int i = 0; i < 3; i++){
-        grah[i] = input[i];
+    int len = slen(input);
+    // Converts the input string to a linked list
+    struct Node* head = (struct Node*) malloc(sizeof(struct Node));
+    head -> data = input[0];
+    head -> next = NULL;
+
+    struct Node* current = head;
+    for(int i = 1; i < len; i++){
+        struct Node* newNode = (struct Node*) malloc(sizeof(struct Node));
+        newNode -> data = input[i];
+        newNode -> next = NULL;
+        current -> next = newNode;
+        current = current -> next;
     }
-    grah[3] = 0;
-    int x = 0;
-    if (!cmp(grah, "sR7")){
-        x++;
-    }
-    for (int i = 0; i < 2; i++){
-        grah[i] = input[i+3]; 
-    }
-    grah[2] = 0;
-    if (!cmp(grah, "uL")){
-        x++;
-    }
-    if (x == 2) z[0] = 0xee;
+    
+    z[0] = helper(head);
 }
 
 int main(){
@@ -424,7 +435,7 @@ int main(){
     puts("Enter the password: ");
     scanf("%s", user_input);
 
-    if(16 == slen(user_input)){ // Chekc length
+    if(16 == slen(user_input)){ // Check length
         char RAUL[5];
         for (int i = 0; i < 5; i++){
             RAUL[i] = user_input[i];
