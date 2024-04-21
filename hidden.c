@@ -550,10 +550,10 @@ int main(){
         // sR7uLB011yOJu9yM
 
         struct Node* gibberish = getRealLocation(location);
-        char* real_loc = decryptLocation(location, raul_yay, rolly_ret, judy_hehe); // <- will become variables set from userInput 
-        if (rolly_ret == 0 || udy == -1 || raul_yay ==0){ // udy is never -1 so fake check from JUDY
-                printf("Better luck next time <3 \n");
+        if (rolly_ret == 0 || judy_hehe  == -1 || raul_yay ==0){ // udy is never -1 so fake check from JUDY
+            printf("Better luck next time <3 \n");
         } else {
+            char* real_loc = decryptLocation(location, raul_yay, rolly_ret, judy_hehe); // <- will become variables set from userInput 
             printf("Congrats! The location is: %s \n", real_loc);
         }
     } else {
