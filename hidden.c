@@ -565,3 +565,6 @@ int main(){
 // Command to convert to assembly
 // gcc -S -masm=intel -O0 -fcf-protection=none \
 -fno-stack-protector -fno-asynchronous-unwind-tables hidden.c
+
+// Command to compile
+// gcc -no-pie -o hidden hidden.s
