@@ -375,32 +375,75 @@ int cmp(char *str1, char *str2) {
 }
 
 // Start of JUDY's 
-const char* apple = "th3 bE$t 1"; 
-const char* orange = "A s01iD pi(k"; 
-const char* grape = "Ac7uAl1y my d@d 1ik*$ th3s3 th8 M0$t"; 
-const char* strawberry = "9/10"; 
-const char* tomato = "d0es th^$ f1t?"; 
-const char* fig = "1 &u3$s Ju$t 0Ka?";
+char apple[] = {'t', 'h', '3', ' ', 'b', 'E', '$', 't', ' ', '1', '\0'};
+char orange[] = {'A', ' ', 's', '0', '1', 'i', 'D', ' ', 'p', 'i', '(', 'k', '\0'};
+char grape[] = {'A', 'c', '7', 'u', 'A', 'l', '1', 'y', ' ', 'm', 'y', ' ', 'd', '@', 'd', ' ', '1', 'i', 'k', '*', '$', ' ', 't', 'h', '3', 's', '3', ' ', 't', 'h', '8', ' ', 'M', '0', '$', 't', '\0'};
+char strawberry[] = {'9', '/', '1', '0', '\0'};
+char tomato[] = {'d', '0', 'e', 's', ' ', 't', 'h', '^', '$', ' ', 'f', '1', 't', '?', '\0'};
+char fig[] = {'1', ' ', '&', 'u', '3', '$', ' ', 'J', 'u', '$', 't', ' ', '0', 'K', 'a', '?', '\0'};
 
 int judy(char* chunk, int* x) { // checking for "Ju9yM"
-    char* noChange = garbage(chunk);
-    if (chunk[0] == fig[8]) {
-        x[0]++; // 1
-    }
-    if (chunk[1] == grape[3]) {
-        x[0] = x[0]*4; // 4
-    }
-    if (chunk[2] == strawberry[0]) {
-        x[0] = x[0]%3; // 1
-    }
-    if (chunk[3] == grape[7]) {
-        x[0]--; // 0
-    }
-    if (chunk[4] == grape[32]) {
-        x[0]=x[0]+2; // 2
+    char* noChange = make_pass(chunk);
+    int count = 0;
+    int three = 0;
+
+    int ooo = strawberry[(grape[2]-apple[2]-(tomato[2] % (grape[2]-apple[2]))) + 1]; // ooo = 0
+    // printf("ooo: %d \n", ooo);
+    if (cmp(noChange, chunk) != 0) {
+        three++;
     }
 
-    return -3;
+    if (chunk[0] == fig[7]) { // correct, "J"
+        x[0] = x[0] + tomato[2]; // 101 
+    } 
+    // printf("first: %d \n", x[0]);
+
+    if (chunk[1] == grape[3]) { // correct, "u"
+        x[0] = x[0] * 2; // 202
+    }
+    // printf("second: %d \n", x[0]);
+
+    if (chunk[2] == strawberry[0]) { // correct, "9"
+        x[0] = x[0] - atoi(&strawberry[3]); // nothing, 202
+        three = 3 * three;
+        // printf("third: %d \n", x[0]);
+    }
+
+    if (chunk[3] == grape[7]) { // correct "y"
+        x[0] = x[0] % three; // 1
+    }
+    // printf("fourth: %d \n", x[0]);
+
+    if (chunk[4] == grape[32]) { // correct "M"
+        x[0] = x[0] + atoi(&apple[9]); // +1 = 2
+    }
+    // printf("fifth: %d \n", x[0]);
+
+    // sR7uLB011yOJu9yM
+    int what = (grape[2]-apple[2]+ (tomato[2] ^ (grape[2]-apple[2])));
+
+    if (ooo == x[0]) { // 0
+        count++;
+    } else if (what == x[0]) { // 101
+        count++;
+    } else if (atoi(&apple[9]) == x[0]) { // 1
+        count++;
+    } else if (atoi(&apple[9])*2 + 1 == x[0]) { // 3
+        count++;
+    } else if (what*atoi(&apple[9])*2 == x[0]) { // 202
+        count++;
+    }  else if (what*atoi(&apple[9])*2 + 1 - what <= x[0]) { // anything 102 or above
+        count++; 
+    }
+
+    // printf("count: %d \n", count);
+    if (count > 0) {
+        x[0] = 0;
+    }
+
+    // printf("what: %d \n", what);
+    // printf("atoi: %d \n", atoi(&apple[9]));
+    return what+count;
 }
 
 // start of OLLY's
@@ -544,13 +587,16 @@ int main(){
             JUDY[j-11] = user_input[j];
         }
         JUDY[6] = 0;
-
         int udy = judy(JUDY, &judy_hehe); // JUDY = "Ju9yM"
+        if (udy < (grape[3]-apple[2]-(tomato[3] % (grape[2]-apple[2])))) { // never taken
+            printf("do you like pancakes? \n");
+            return 0;
+        }
 
         // sR7uLB011yOJu9yM
 
         struct Node* gibberish = getRealLocation(location);
-        if (rolly_ret == 0 || judy_hehe  == -1 || raul_yay ==0){ // udy is never -1 so fake check from JUDY
+        if (rolly_ret == 0 || judy_hehe  == 0 || raul_yay ==0){ // udy is never -1 so fake check from JUDY
             printf("Better luck next time <3 \n");
         } else {
             char* real_loc = decryptLocation(location, raul_yay, rolly_ret, judy_hehe); // <- will become variables set from userInput 
@@ -561,10 +607,3 @@ int main(){
     }
     return 0;
 }
-
-// Command to convert to assembly
-// gcc -S -masm=intel -O0 -fcf-protection=none \
--fno-stack-protector -fno-asynchronous-unwind-tables hidden.c
-
-// Command to compile
-// gcc -no-pie -o hidden hidden.s
