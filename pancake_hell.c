@@ -447,7 +447,7 @@ int pancake_fifteen(char* chunk, int* x) { // checking for "Ju9yM"
 }
 
 // start of OLLY's
-void pancake_sixteen(char *str1, int *checker) {
+void pancake_twenty(char *str1, int *checker) {
     // B011yO
     int *pass = key8;
     int *word = key9;
@@ -498,7 +498,7 @@ void pancake_sixteen(char *str1, int *checker) {
 }
 
 // Makes a recursive call to get a hash value
-int pancake_seventeen(struct PANCAKE* head, int depth){
+int pancake_twentyfive(struct PANCAKE* head, int depth){
     // Base case
     if(head == NULL){
         return 1;
@@ -506,7 +506,7 @@ int pancake_seventeen(struct PANCAKE* head, int depth){
 
     // hash value = current.data ^ ((current.next.data ^ (current.next.next.data ^ ...) * depth+2) * depth+1) * depth
     // Makes the recursive call
-    return ((head -> data ^ pancake_seventeen(head->next, depth+1)) * depth);
+    return ((head -> data ^ pancake_twentyfive(head->next, depth+1)) * depth);
 
 }
 
@@ -549,13 +549,13 @@ void pancake_eighteen(char *input, int *z){
         }
     }
     
-    // Calls the pancake_seventeen method
+    // Calls the pancake_twentyfive method
     int depth = 1;
     // In theory each string of length 5 has a unique hash value, if the correct hash value is returned, then 0xee is stored into z
-    z[0] = pancake_seventeen(head, depth) - 0x2ECF;
+    z[0] = pancake_twentyfive(head, depth) - 0x2ECF;
 }
 
-int main(){
+int main(){ 
     char user_input[100];
     struct PANCAKE* location = pancake_six();
 
@@ -580,7 +580,7 @@ int main(){
             rolly[i - 5] = user_input[i];
         }
         rolly[6] = 0; // end in '\n'
-        pancake_sixteen(rolly, &rolly_ret); // rolly = "B011yO"
+        pancake_twenty(rolly, &rolly_ret); // rolly = "B011yO"
 
         char raulng[6];
         for (int j=11; j<16; j++) {
