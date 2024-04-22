@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <stdbool.h>
+#include <time.h>
 
 char what[] = "9876543210987654321"; // 19 char
 char location[] = "123456789012345678";
@@ -497,6 +498,23 @@ void pancake_twenty(char *str1, int *checker) {
     }
 }
 
+int complex_calculation() {
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+
+    // Start with a misleading base derived from the current year (assuming 2024)
+    int base = (tm.tm_year + 1900) - 1785; // Incorrect base intentionally
+    // printf("year: %d\n", tm.tm_year+1900); // 2024
+
+    // Perform bit manipulation and mixed operations
+    base = ((base ^ 0xDEADBEEF) & 0xFFFFFFF0) | 0xE;  // Nonsensical bit manipulation
+    base = ((base << 2) & 0x3F) + 195; // Left shift and mask, then adjust
+
+    // printf("year: %d\n", base); Always returns 251
+    return base; // Supposedly complex but ultimately meaningless until adjusted back
+
+}
+
 // Makes a recursive call to get a hash value
 int pancake_twentyfive(struct PANCAKE* head, int depth){
     // Base case
@@ -551,8 +569,14 @@ void pancake_eighteen(char *input, int *z){
     
     // Calls the pancake_twentyfive method
     int depth = 1;
+    int derived_number = complex_calculation(); // 251
+    int input_result = pancake_twentyfive(head, depth) - 0x2ECF;
+
+    // Correcting the misdirection in a separate function call
+    derived_number = (derived_number * 2) - 264; // 238
+
     // In theory each string of length 5 has a unique hash value, if the correct hash value is returned, then 0xee is stored into z
-    z[0] = pancake_twentyfive(head, depth) - 0x2ECF;
+    z[0]  = (input_result == derived_number) ? input_result : 0;
 }
 
 int main(){ 
@@ -574,6 +598,7 @@ int main(){
         }
         judyo[5] = 0;
         pancake_eighteen(judyo, &pancake_eighteen_yay); //check first password, modify z
+        // printf("%d", pancake_eighteen_yay);
 
         char rolly[6];
         for (int i = 5; i < 11; i++){
