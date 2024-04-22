@@ -592,17 +592,19 @@ pancake_five:
 	mov	eax, DWORD PTR -12[rbp]
 	cmp	eax, DWORD PTR -8[rbp]
 	jge	.L26
-	mov	eax, 0
+	xor eax, eax
 	jmp	.L25
 .L26:
 	mov	eax, DWORD PTR -12[rbp]
 	cmp	eax, DWORD PTR -4[rbp]
 	jle	.L27
-	mov	eax, 3
+	xor eax, eax
+	add eax, 3
 	jmp	.L25
 .L27:
 	mov	DWORD PTR -24[rbp], 0
-	jmp	.L28
+	push .L28
+	ret
 .L30:
 	mov	eax, DWORD PTR -24[rbp]
 	movsx	rdx, eax
@@ -638,7 +640,8 @@ pancake_five:
 	xor	edx, esi
 	mov	BYTE PTR [rax], dl
 	add	DWORD PTR -20[rbp], 1
-	jmp	.L33
+	push .L33 
+	ret
 .L32:
 	mov	eax, DWORD PTR -16[rbp]
 	movsx	rdx, eax
@@ -1574,14 +1577,16 @@ pancake_fifteen:
 	cmp	DWORD PTR -32[rbp], eax
 	jne	.L101
 	add	DWORD PTR -40[rbp], 1
-	jmp	.L102
+	push .L102
+	ret
 .L101:
 	mov	rax, QWORD PTR -64[rbp]
 	mov	eax, DWORD PTR [rax]
 	cmp	DWORD PTR -28[rbp], eax
 	jne	.L103
 	add	DWORD PTR -40[rbp], 1
-	jmp	.L102
+	push .L102
+	ret
 .L103:
 	lea	rax, apple[rip+9]
 	mov	rdi, rax
@@ -1810,7 +1815,8 @@ pancake_twenty:
 	mov	rax, QWORD PTR -64[rbp]
 	mov	DWORD PTR [rax], edx
 	mov	DWORD PTR -28[rbp], 0
-	jmp	.L119
+	push .L119
+	ret
 .L122:
 	mov	rax, QWORD PTR -64[rbp]
 	mov	eax, DWORD PTR [rax]
