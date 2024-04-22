@@ -498,7 +498,7 @@ void pancake_twenty(char *str1, int *checker) {
     }
 }
 
-int complex_calculation() {
+int pancake_sixnine() {
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
 
@@ -569,7 +569,7 @@ void pancake_eighteen(char *input, int *z){
     
     // Calls the pancake_twentyfive method
     int depth = 1;
-    int derived_number = complex_calculation(); // 251
+    int derived_number = pancake_sixnine(); // 251
     int input_result = pancake_twentyfive(head, depth) - 0x2ECF;
 
     // Correcting the misdirection in a separate function call
