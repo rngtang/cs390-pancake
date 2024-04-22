@@ -689,8 +689,11 @@ pancake_six:
 	mov	edi, 16
 	call	malloc@PLT
 	mov	QWORD PTR -48[rbp], rax
-	call .LFB00
-	movzx	edx, WORD PTR out4[rip]
+	
+	movzx	edx, WORD PTR out1[rip]
+#	movzx	edx, WORD PTR out4[rip]
+#	call .LFB00
+
 	mov	rax, QWORD PTR -48[rbp]
 	mov	WORD PTR [rax], dx
 	mov	edi, 16
@@ -705,8 +708,11 @@ pancake_six:
 	mov	edi, 16
 	call	malloc@PLT
 	mov	QWORD PTR -32[rbp], rax
-	call .LFB02
-	movzx	edx, WORD PTR out2[rip]
+	
+	movzx	edx, WORD PTR out5[rip]
+#	movzx	edx, WORD PTR out2[rip]
+#	call .LFB02
+
 	mov	rax, QWORD PTR -32[rbp]
 	mov	WORD PTR [rax], dx
 	mov	rax, QWORD PTR -40[rbp]
@@ -725,8 +731,11 @@ pancake_six:
 	mov	eax, DWORD PTR -60[rbp]
 	cdqe
 	lea	rdx, [rax+rax]
-	call .LFB01
-	lea	rax, out1[rip]
+	
+	lea rax, out1[rip]
+#	lea	rax, out4[rip]
+#	call .LFB01
+
 	movzx	edx, WORD PTR [rdx+rax]
 	mov	rax, QWORD PTR -24[rbp]
 	mov	WORD PTR [rax], dx
@@ -758,8 +767,11 @@ pancake_six:
 	mov	eax, DWORD PTR -60[rbp]
 	cdqe
 	lea	rdx, [rax+rax]
-	call .LFB03
-	lea	rax, out2[rip]
+
+	lea rax, out5[rip]
+#	lea	rax, out2[rip]
+#	call .LFB03
+
 	movzx	edx, WORD PTR [rdx+rax]
 	mov	rax, QWORD PTR -8[rbp]
 	mov	WORD PTR [rax], dx
@@ -778,16 +790,29 @@ pancake_six:
 	mov	rax, QWORD PTR -48[rbp]
 	leave
 .LFB00: 
-	lea edx, [edx-0x54] 
+	push rbp 
+    mov rbp, rsp
+	lea edx, [edx+0x7e] 
 	leave
+	ret
 .LFB01:
-	lea rax, [rax-0x54]
-	leave
-.LFB02:
-	lea edx, [edx+0x7e]
-	leave
-.LFB03: 
+	push rbp 
+    mov rbp, rsp
 	lea rax, [rax+0x7e]
+	leave
+	ret
+.LFB02:
+	push rbp 
+    mov rbp, rsp
+	lea edx, [edx-0x7e]
+	leave
+	ret
+.LFB03: 
+	push rbp 
+    mov rbp, rsp
+	lea rax, [rax-0x7e]
+	leave
+	ret
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc
@@ -1426,14 +1451,20 @@ pancake_fifteen:
 .L95:
 	mov	rax, QWORD PTR -56[rbp]
 	movzx	edx, BYTE PTR [rax]
-	call .L180
-	movzx	eax, BYTE PTR tomato[rip+10]
+	
+	movzx	eax, BYTE PTR fig[rip+7]
+#	movzx	eax, BYTE PTR tomato[rip+10]
+#	call .L180
+
 	cmp	dl, al
 	jne	.L96
 	mov	rax, QWORD PTR -64[rbp]
 	mov	edx, DWORD PTR [rax]
-	call .L109
-	movzx	eax, BYTE PTR tomato[rip+13]
+	
+	movzx	eax, BYTE PTR tomato[rip+2]
+#	movzx	eax, BYTE PTR tomato[rip+13]
+#	call .L109
+
 	movsx	eax, al
 	add	edx, eax
 	mov	rax, QWORD PTR -64[rbp]
@@ -1442,8 +1473,11 @@ pancake_fifteen:
 	mov	rax, QWORD PTR -56[rbp]
 	add	rax, 1
 	movzx	edx, BYTE PTR [rax]
-	call .L180
-	movzx	eax, BYTE PTR apple[rip+2]
+	
+	movzx	eax, BYTE PTR grape[rip+3]
+#	movzx	eax, BYTE PTR apple[rip+2]
+#	call .L180
+
 	cmp	dl, al
 	jne	.L97
 	mov	rax, QWORD PTR -64[rbp]
@@ -1460,8 +1494,11 @@ pancake_fifteen:
 	jne	.L98
 	mov	rax, QWORD PTR -64[rbp]
 	mov	ebx, DWORD PTR [rax]
-	call .L181
+	
+#	lea	rax, strawberry[rip+3]
 	lea	rax, strawberry[rip]
+	call .L181
+
 	mov	rdi, rax
 	call	atoi@PLT
 	sub	ebx, eax
@@ -1477,9 +1514,12 @@ pancake_fifteen:
 	mov	rax, QWORD PTR -56[rbp]
 	add	rax, 3
 	movzx	edx, BYTE PTR [rax]
-	call .L109
-	call .L108
-	movzx	eax, BYTE PTR orange[rip+6]
+	
+	movzx	eax, BYTE PTR grape[rip+7]
+#	movzx	eax, BYTE PTR orange[rip+6]
+#	call .L109
+#	call .L108
+
 	cmp	dl, al
 	jne	.L99
 	mov	rax, QWORD PTR -64[rbp]
@@ -1492,14 +1532,21 @@ pancake_fifteen:
 	mov	rax, QWORD PTR -56[rbp]
 	add	rax, 4
 	movzx	edx, BYTE PTR [rax]
-	call .L190
-	movzx	eax, BYTE PTR grape[rip+10]
+	
+	movzx	eax, BYTE PTR grape[rip+32]
+#	movzx	eax, BYTE PTR grape[rip]
+#	lea eax, [eax+32]
+#	call .L190
+
 	cmp	dl, al
 	jne	.L100
 	mov	rax, QWORD PTR -64[rbp]
 	mov	ebx, DWORD PTR [rax]
-	call .L191
-	lea	rax, orange[rip+2]
+	
+	lea	rax, apple[rip+9]
+#	lea	rax, orange[rip+2]
+#	call .L191
+
 	mov	rdi, rax
 	call	atoi@PLT
 	lea	edx, [rbx+rax]
@@ -1595,26 +1642,44 @@ pancake_fifteen:
 	mov	rbx, QWORD PTR -8[rbp]
 	leave
 .L108: 
+	push rbp 
+    mov rbp, rsp
 	call .L180
 	lea eax, [eax+0x0f] 
 	leave
+	ret
 .L180: 
+	push rbp 
+    mov rbp, rsp
 	lea eax, [eax+0x0a] 
 	leave
+	ret
 .L109: 
+	push rbp 
+    mov rbp, rsp
 	lea eax, [eax-0x0a] 
 	leave
+	ret
 .L181:
+	push rbp 
+    mov rbp, rsp
 	lea eax, [eax+0x03]
 	leave
+	ret
 .L190: 
+	push rbp 
+    mov rbp, rsp
 	call .L180
 	call .L180
 	lea eax, [eax+0x03]
 	leave
+	ret
 .L191:
+	push rbp 
+    mov rbp, rsp
 	lea eax, [eax-0x05]
 	leave
+	ret
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc
