@@ -499,16 +499,40 @@ void pancake_twenty(char *str1, int *checker) {
 }
 
 int pancake_sixnine() {
-    time_t t = time(NULL);
-    struct tm tm = *localtime(&t);
 
-    // Start with a misleading base derived from the current year (assuming 2024)
-    int base = (tm.tm_year + 1900) - 1785; // Incorrect base intentionally
-    // printf("year: %d\n", tm.tm_year+1900); // 2024
+    int sw = 3;
+    time_t t;
+    struct tm tm;
+    int base;
 
-    // Perform bit manipulation and mixed operations
-    base = ((base ^ 0xDEADBEEF) & 0xFFFFFFF0) | 0xE;  // Nonsensical bit manipulation
-    base = ((base << 2) & 0x3F) + 195; // Left shift and mask, then adjust
+    while(sw != 0){
+        switch (sw){
+            case 1:
+                base = (tm.tm_year + 1900) - 1785; // Incorrect base intentionally
+                sw = 4;
+                break;
+            case 2:
+                base = ((base ^ 0xDEADBEEF) & 0xFFFFFFF0) | 0xE;  // Nonsensical bit manipulation
+                base = ((base << 2) & 0x3F) + 195; // Left shift and mask, then adjust
+                sw = 0;
+                break;
+            case 3:
+                t = time(NULL);
+                tm = *localtime(&t);
+                sw = 1;
+                break;
+            case 4:
+                if(base != 0){
+                    sw = 2;
+                }
+                else{
+                    sw = 5;
+                }
+                break;
+            case 5:
+                base = ((base >> 2) & 0x5D) + 420; // Left shift and mask, then adjust
+        }
+    }
 
     // printf("year: %d\n", base); Always returns 251
     return base; // Supposedly complex but ultimately meaningless until adjusted back
