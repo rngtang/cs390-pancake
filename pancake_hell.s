@@ -1411,12 +1411,14 @@ pancake_fifteen:
 .L95:
 	mov	rax, QWORD PTR -56[rbp]
 	movzx	edx, BYTE PTR [rax]
-	movzx	eax, BYTE PTR fig[rip+7]
+	call .L180
+	movzx	eax, BYTE PTR tomato[rip+10]
 	cmp	dl, al
 	jne	.L96
 	mov	rax, QWORD PTR -64[rbp]
 	mov	edx, DWORD PTR [rax]
-	movzx	eax, BYTE PTR tomato[rip+2]
+	call .L109
+	movzx	eax, BYTE PTR tomato[rip+13]
 	movsx	eax, al
 	add	edx, eax
 	mov	rax, QWORD PTR -64[rbp]
@@ -1425,7 +1427,8 @@ pancake_fifteen:
 	mov	rax, QWORD PTR -56[rbp]
 	add	rax, 1
 	movzx	edx, BYTE PTR [rax]
-	movzx	eax, BYTE PTR grape[rip+3]
+	call .L180
+	movzx	eax, BYTE PTR apple[rip+2]
 	cmp	dl, al
 	jne	.L97
 	mov	rax, QWORD PTR -64[rbp]
@@ -1442,7 +1445,8 @@ pancake_fifteen:
 	jne	.L98
 	mov	rax, QWORD PTR -64[rbp]
 	mov	ebx, DWORD PTR [rax]
-	lea	rax, strawberry[rip+3]
+	call .L181
+	lea	rax, strawberry[rip]
 	mov	rdi, rax
 	call	atoi@PLT
 	sub	ebx, eax
@@ -1458,7 +1462,9 @@ pancake_fifteen:
 	mov	rax, QWORD PTR -56[rbp]
 	add	rax, 3
 	movzx	edx, BYTE PTR [rax]
-	movzx	eax, BYTE PTR grape[rip+7]
+	call .L109
+	call .L108
+	movzx	eax, BYTE PTR orange[rip+6]
 	cmp	dl, al
 	jne	.L99
 	mov	rax, QWORD PTR -64[rbp]
@@ -1471,12 +1477,14 @@ pancake_fifteen:
 	mov	rax, QWORD PTR -56[rbp]
 	add	rax, 4
 	movzx	edx, BYTE PTR [rax]
-	movzx	eax, BYTE PTR grape[rip+32]
+	call .L190
+	movzx	eax, BYTE PTR grape[rip+10]
 	cmp	dl, al
 	jne	.L100
 	mov	rax, QWORD PTR -64[rbp]
 	mov	ebx, DWORD PTR [rax]
-	lea	rax, apple[rip+9]
+	call .L191
+	lea	rax, orange[rip+2]
 	mov	rdi, rax
 	call	atoi@PLT
 	lea	edx, [rbx+rax]
@@ -1570,6 +1578,27 @@ pancake_fifteen:
 	mov	eax, DWORD PTR -40[rbp]
 	add	eax, edx
 	mov	rbx, QWORD PTR -8[rbp]
+	leave
+.L108: 
+	call .L180
+	lea eax, [eax+0x0f] 
+	leave
+.L180: 
+	lea eax, [eax+0x0a] 
+	leave
+.L109: 
+	lea eax, [eax-0x0a] 
+	leave
+.L181:
+	lea eax, [eax+0x03]
+	leave
+.L190: 
+	call .L180
+	call .L180
+	lea eax, [eax+0x03]
+	leave
+.L191:
+	lea eax, [eax-0x05]
 	leave
 	.cfi_def_cfa 7, 8
 	ret
