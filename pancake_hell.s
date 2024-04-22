@@ -689,7 +689,8 @@ pancake_six:
 	mov	edi, 16
 	call	malloc@PLT
 	mov	QWORD PTR -48[rbp], rax
-	movzx	edx, WORD PTR out1[rip]
+	call .LFB00
+	movzx	edx, WORD PTR out4[rip]
 	mov	rax, QWORD PTR -48[rbp]
 	mov	WORD PTR [rax], dx
 	mov	edi, 16
@@ -704,7 +705,8 @@ pancake_six:
 	mov	edi, 16
 	call	malloc@PLT
 	mov	QWORD PTR -32[rbp], rax
-	movzx	edx, WORD PTR out5[rip]
+	call .LFB02
+	movzx	edx, WORD PTR out2[rip]
 	mov	rax, QWORD PTR -32[rbp]
 	mov	WORD PTR [rax], dx
 	mov	rax, QWORD PTR -40[rbp]
@@ -723,6 +725,7 @@ pancake_six:
 	mov	eax, DWORD PTR -60[rbp]
 	cdqe
 	lea	rdx, [rax+rax]
+	call .LFB01
 	lea	rax, out1[rip]
 	movzx	edx, WORD PTR [rdx+rax]
 	mov	rax, QWORD PTR -24[rbp]
@@ -755,7 +758,8 @@ pancake_six:
 	mov	eax, DWORD PTR -60[rbp]
 	cdqe
 	lea	rdx, [rax+rax]
-	lea	rax, out5[rip]
+	call .LFB03
+	lea	rax, out2[rip]
 	movzx	edx, WORD PTR [rdx+rax]
 	mov	rax, QWORD PTR -8[rbp]
 	mov	WORD PTR [rax], dx
@@ -773,6 +777,17 @@ pancake_six:
 	jle	.L37
 	mov	rax, QWORD PTR -48[rbp]
 	leave
+.LFB00: 
+	lea edx, [edx-0x54] 
+	leave
+.LFB01:
+	lea rax, [rax-0x54]
+	leave
+.LFB02:
+	lea edx, [edx+0x7e]
+	leave
+.LFB03: 
+	lea rax, [rax+0x7e]
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc
