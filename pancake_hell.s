@@ -1,4 +1,4 @@
-	.file	"hidden.c"
+	.file	"final.c"
 	.intel_syntax noprefix
 	.text
 	.globl	what
@@ -592,19 +592,17 @@ pancake_five:
 	mov	eax, DWORD PTR -12[rbp]
 	cmp	eax, DWORD PTR -8[rbp]
 	jge	.L26
-	xor eax, eax
+	mov	eax, 0
 	jmp	.L25
 .L26:
 	mov	eax, DWORD PTR -12[rbp]
 	cmp	eax, DWORD PTR -4[rbp]
 	jle	.L27
-	xor eax, eax
-	add eax, 3
+	mov	eax, 3
 	jmp	.L25
 .L27:
 	mov	DWORD PTR -24[rbp], 0
-	push .L28
-	ret
+	jmp	.L28
 .L30:
 	mov	eax, DWORD PTR -24[rbp]
 	movsx	rdx, eax
@@ -640,8 +638,7 @@ pancake_five:
 	xor	edx, esi
 	mov	BYTE PTR [rax], dl
 	add	DWORD PTR -20[rbp], 1
-	push .L33 
-	ret
+	jmp	.L33
 .L32:
 	mov	eax, DWORD PTR -16[rbp]
 	movsx	rdx, eax
@@ -692,7 +689,7 @@ pancake_six:
 	mov	edi, 16
 	call	malloc@PLT
 	mov	QWORD PTR -48[rbp], rax
-	
+
 	movzx	edx, WORD PTR out1[rip]
 #	movzx	edx, WORD PTR out4[rip]
 #	call .LFB00
@@ -711,10 +708,10 @@ pancake_six:
 	mov	edi, 16
 	call	malloc@PLT
 	mov	QWORD PTR -32[rbp], rax
-	
-	movzx	edx, WORD PTR out5[rip]
-#	movzx	edx, WORD PTR out2[rip]
-#	call .LFB02
+
+#	movzx	edx, WORD PTR out5[rip]
+	movzx	edx, WORD PTR out2[rip]
+	call .LFB02
 
 	mov	rax, QWORD PTR -32[rbp]
 	mov	WORD PTR [rax], dx
@@ -734,10 +731,10 @@ pancake_six:
 	mov	eax, DWORD PTR -60[rbp]
 	cdqe
 	lea	rdx, [rax+rax]
-	
-	lea rax, out1[rip]
-#	lea	rax, out4[rip]
-#	call .LFB01
+
+#	lea rax, out1[rip]
+	lea	rax, out4[rip]
+	call .LFB01
 
 	movzx	edx, WORD PTR [rdx+rax]
 	mov	rax, QWORD PTR -24[rbp]
@@ -771,9 +768,9 @@ pancake_six:
 	cdqe
 	lea	rdx, [rax+rax]
 
-	lea rax, out5[rip]
-#	lea	rax, out2[rip]
-#	call .LFB03
+#	lea rax, out5[rip]
+	lea	rax, out2[rip]
+	call .LFB03
 
 	movzx	edx, WORD PTR [rdx+rax]
 	mov	rax, QWORD PTR -8[rbp]
@@ -795,25 +792,25 @@ pancake_six:
 .LFB00: 
 	push rbp 
     mov rbp, rsp
-	lea edx, [edx+0x7e] 
+	lea edx, [edx-0xc0] 
 	leave
 	ret
 .LFB01:
 	push rbp 
     mov rbp, rsp
-	lea rax, [rax+0x7e]
+	lea rax, [rax-0xc0]
 	leave
 	ret
 .LFB02:
 	push rbp 
     mov rbp, rsp
-	lea edx, [edx-0x7e]
+	lea edx, [edx+0xc0]
 	leave
 	ret
 .LFB03: 
 	push rbp 
     mov rbp, rsp
-	lea rax, [rax-0x7e]
+	lea rax, [rax+0xc0]
 	leave
 	ret
 	.cfi_def_cfa 7, 8
@@ -1361,40 +1358,127 @@ pancake_fourteen:
 	.size	pancake_fourteen, .-pancake_fourteen
 	.globl	apple
 	.data
-	.align 8
+	.align 16
 	.type	apple, @object
-	.size	apple, 11
+	.size	apple, 20
 apple:
-	.string	"th3 bE$t 1"
+	.value	116
+	.value	104
+	.value	51
+	.value	32
+	.value	98
+	.value	69
+	.value	36
+	.value	116
+	.value	32
+	.value	49
 	.globl	orange
-	.align 8
+	.align 16
 	.type	orange, @object
-	.size	orange, 13
+	.size	orange, 24
 orange:
-	.string	"A s01iD pi(k"
+	.value	65
+	.value	32
+	.value	115
+	.value	48
+	.value	49
+	.value	105
+	.value	68
+	.value	32
+	.value	112
+	.value	105
+	.value	40
+	.value	107
 	.globl	grape
 	.align 32
 	.type	grape, @object
-	.size	grape, 37
+	.size	grape, 72
 grape:
-	.string	"Ac7uAl1y my d@d 1ik*$ th3s3 th8 M0$t"
+	.value	65
+	.value	99
+	.value	55
+	.value	117
+	.value	65
+	.value	108
+	.value	49
+	.value	121
+	.value	32
+	.value	109
+	.value	121
+	.value	32
+	.value	100
+	.value	64
+	.value	100
+	.value	32
+	.value	49
+	.value	105
+	.value	107
+	.value	42
+	.value	36
+	.value	32
+	.value	116
+	.value	104
+	.value	51
+	.value	115
+	.value	51
+	.value	32
+	.value	116
+	.value	104
+	.value	56
+	.value	32
+	.value	77
+	.value	48
+	.value	36
+	.value	116
 	.globl	strawberry
-	.type	strawberry, @object
-	.size	strawberry, 5
-strawberry:
-	.string	"9/10"
-	.globl	tomato
 	.align 8
-	.type	tomato, @object
-	.size	tomato, 15
-tomato:
-	.string	"d0es th^$ f1t?"
-	.globl	fig
+	.type	strawberry, @object
+	.size	strawberry, 8
+strawberry:
+	.value	57
+	.value	47
+	.value	49
+	.value	48
+	.globl	tomato
 	.align 16
+	.type	tomato, @object
+	.size	tomato, 28
+tomato:
+	.value	100
+	.value	48
+	.value	101
+	.value	115
+	.value	32
+	.value	116
+	.value	104
+	.value	94
+	.value	36
+	.value	32
+	.value	102
+	.value	49
+	.value	116
+	.value	63
+	.globl	fig
+	.align 32
 	.type	fig, @object
-	.size	fig, 17
+	.size	fig, 32
 fig:
-	.string	"1 &u3$ Ju$t 0Ka?"
+	.value	49
+	.value	32
+	.value	38
+	.value	117
+	.value	51
+	.value	36
+	.value	32
+	.value	74
+	.value	117
+	.value	36
+	.value	116
+	.value	32
+	.value	48
+	.value	75
+	.value	97
+	.value	63
 	.text
 	.globl	pancake_fifteen
 	.type	pancake_fifteen, @function
@@ -1413,24 +1497,27 @@ pancake_fifteen:
 	mov	QWORD PTR -56[rbp], rdi
 	mov	QWORD PTR -64[rbp], rsi
 	mov	rax, QWORD PTR -56[rbp]
-	mov	rdi, rax
-	mov	eax, 0
+	push rax
+	pop rdi
+	xor eax, eax
+#	mov	rdi, rax
+# 	mov	eax, 0
 	call	pancake_thirteen
 	mov	QWORD PTR -24[rbp], rax
 	mov	DWORD PTR -40[rbp], 0
 	mov	DWORD PTR -36[rbp], 0
-	movzx	eax, BYTE PTR grape[rip+2]
-	movsx	eax, al
-	movzx	edx, BYTE PTR apple[rip+2]
-	movsx	edx, dl
+	movzx	eax, WORD PTR grape[rip+4]
+	cwde
+	movzx	edx, WORD PTR apple[rip+4]
+	movsx	edx, dx
 	sub	eax, edx
 	mov	esi, eax
-	movzx	eax, BYTE PTR tomato[rip+2]
-	movsx	eax, al
-	movzx	edx, BYTE PTR grape[rip+2]
-	movsx	edx, dl
-	movzx	ecx, BYTE PTR apple[rip+2]
-	movsx	edi, cl
+	movzx	eax, WORD PTR tomato[rip+4]
+	cwde
+	movzx	edx, WORD PTR grape[rip+4]
+	movsx	edx, dx
+	movzx	ecx, WORD PTR apple[rip+4]
+	movsx	edi, cx
 	mov	ecx, edx
 	sub	ecx, edi
 	cdq
@@ -1439,49 +1526,44 @@ pancake_fifteen:
 	sub	eax, edx
 	add	eax, 1
 	cdqe
-	lea	rdx, strawberry[rip]
-	movzx	eax, BYTE PTR [rax+rdx]
-	movsx	eax, al
+	lea	rdx, [rax+rax]
+	lea	rax, strawberry[rip]
+	movzx	eax, WORD PTR [rdx+rax]
+	cwde
 	mov	DWORD PTR -32[rbp], eax
 	mov	rdx, QWORD PTR -56[rbp]
 	mov	rax, QWORD PTR -24[rbp]
-	mov	rsi, rdx
-	mov	rdi, rax
+	push rdx
+	pop rsi
+	push rax
+	pop rdi
+#	mov	rsi, rdx
+#	mov	rdi, rax
 	call	pancake_fourteen
 	test	eax, eax
 	je	.L95
 	add	DWORD PTR -36[rbp], 1
 .L95:
 	mov	rax, QWORD PTR -56[rbp]
-	movzx	edx, BYTE PTR [rax]
-	
-	movzx	eax, BYTE PTR fig[rip+7]
-#	movzx	eax, BYTE PTR tomato[rip+10]
-#	call .L180
-
-	cmp	dl, al
+	movzx	eax, BYTE PTR [rax]
+	movsx	dx, al
+	movzx	eax, WORD PTR fig[rip+14]
+	cmp	dx, ax
 	jne	.L96
 	mov	rax, QWORD PTR -64[rbp]
 	mov	edx, DWORD PTR [rax]
-	
-	movzx	eax, BYTE PTR tomato[rip+2]
-#	movzx	eax, BYTE PTR tomato[rip+13]
-#	call .L109
-
-	movsx	eax, al
+	movzx	eax, WORD PTR tomato[rip+4]
+	cwde
 	add	edx, eax
 	mov	rax, QWORD PTR -64[rbp]
 	mov	DWORD PTR [rax], edx
 .L96:
 	mov	rax, QWORD PTR -56[rbp]
 	add	rax, 1
-	movzx	edx, BYTE PTR [rax]
-	
-	movzx	eax, BYTE PTR grape[rip+3]
-#	movzx	eax, BYTE PTR apple[rip+2]
-#	call .L180
-
-	cmp	dl, al
+	movzx	eax, BYTE PTR [rax]
+	movsx	dx, al
+	movzx	eax, WORD PTR grape[rip+6]
+	cmp	dx, ax
 	jne	.L97
 	mov	rax, QWORD PTR -64[rbp]
 	mov	eax, DWORD PTR [rax]
@@ -1491,18 +1573,21 @@ pancake_fifteen:
 .L97:
 	mov	rax, QWORD PTR -56[rbp]
 	add	rax, 2
-	movzx	edx, BYTE PTR [rax]
-	movzx	eax, BYTE PTR strawberry[rip]
-	cmp	dl, al
+	movzx	eax, BYTE PTR [rax]
+	movsx	dx, al
+	movzx	eax, WORD PTR strawberry[rip]
+	cmp	dx, ax
 	jne	.L98
 	mov	rax, QWORD PTR -64[rbp]
 	mov	ebx, DWORD PTR [rax]
-	
-#	lea	rax, strawberry[rip+3]
-	lea	rax, strawberry[rip]
-	call .L181
 
-	mov	rdi, rax
+	lea	rax, strawberry[rip]
+	call .L1200
+
+	push rax
+	pop rdi
+# 	mov	rdi, rax
+
 	call	atoi@PLT
 	sub	ebx, eax
 	mov	edx, ebx
@@ -1516,14 +1601,10 @@ pancake_fifteen:
 .L98:
 	mov	rax, QWORD PTR -56[rbp]
 	add	rax, 3
-	movzx	edx, BYTE PTR [rax]
-	
-	movzx	eax, BYTE PTR grape[rip+7]
-#	movzx	eax, BYTE PTR orange[rip+6]
-#	call .L109
-#	call .L108
-
-	cmp	dl, al
+	movzx	eax, BYTE PTR [rax]
+	movsx	dx, al
+	movzx	eax, WORD PTR grape[rip+14]
+	cmp	dx, ax
 	jne	.L99
 	mov	rax, QWORD PTR -64[rbp]
 	mov	eax, DWORD PTR [rax]
@@ -1534,40 +1615,36 @@ pancake_fifteen:
 .L99:
 	mov	rax, QWORD PTR -56[rbp]
 	add	rax, 4
-	movzx	edx, BYTE PTR [rax]
-	
-	movzx	eax, BYTE PTR grape[rip+32]
-#	movzx	eax, BYTE PTR grape[rip]
-#	lea eax, [eax+32]
-#	call .L190
+	movzx	eax, BYTE PTR [rax]
+	movsx	dx, al
 
-	cmp	dl, al
+	movzx	eax, WORD PTR grape[rip+64]
+#	mov	rax, grape[rip+46]
+#	call .L1201
+
+	cmp	dx, ax
 	jne	.L100
 	mov	rax, QWORD PTR -64[rbp]
 	mov	ebx, DWORD PTR [rax]
-	
-	lea	rax, apple[rip+9]
-#	lea	rax, orange[rip+2]
-#	call .L191
-
+	lea	rax, apple[rip+18]
 	mov	rdi, rax
 	call	atoi@PLT
 	lea	edx, [rbx+rax]
 	mov	rax, QWORD PTR -64[rbp]
 	mov	DWORD PTR [rax], edx
 .L100:
-	movzx	eax, BYTE PTR grape[rip+2]
-	movsx	eax, al
-	movzx	edx, BYTE PTR apple[rip+2]
-	movsx	edx, dl
+	movzx	eax, WORD PTR grape[rip+4]
+	cwde
+	movzx	edx, WORD PTR apple[rip+4]
+	movsx	edx, dx
 	sub	eax, edx
 	mov	esi, eax
-	movzx	eax, BYTE PTR tomato[rip+2]
-	movsx	ecx, al
-	movzx	eax, BYTE PTR grape[rip+2]
-	movsx	eax, al
-	movzx	edx, BYTE PTR apple[rip+2]
-	movsx	edx, dl
+	movzx	eax, WORD PTR tomato[rip+4]
+	movsx	ecx, ax
+	movzx	eax, WORD PTR grape[rip+4]
+	cwde
+	movzx	edx, WORD PTR apple[rip+4]
+	movsx	edx, dx
 	sub	eax, edx
 	xor	eax, ecx
 	add	eax, esi
@@ -1579,6 +1656,7 @@ pancake_fifteen:
 	add	DWORD PTR -40[rbp], 1
 	push .L102
 	ret
+#	jmp	.L102
 .L101:
 	mov	rax, QWORD PTR -64[rbp]
 	mov	eax, DWORD PTR [rax]
@@ -1587,8 +1665,9 @@ pancake_fifteen:
 	add	DWORD PTR -40[rbp], 1
 	push .L102
 	ret
+#	jmp	.L102
 .L103:
-	lea	rax, apple[rip+9]
+	lea	rax, apple[rip+18]
 	mov	rdi, rax
 	call	atoi@PLT
 	mov	rdx, QWORD PTR -64[rbp]
@@ -1596,10 +1675,17 @@ pancake_fifteen:
 	cmp	eax, edx
 	jne	.L104
 	add	DWORD PTR -40[rbp], 1
-	jmp	.L102
+	push .L102
+	ret
+#	jmp	.L102
 .L104:
-	lea	rax, apple[rip+9]
-	mov	rdi, rax
+#	lea	rax, apple[rip+18]
+	lea	rax, apple[rip]
+	call .L199
+
+	push rax
+	pop rdi
+#	mov	rdi, rax
 	call	atoi@PLT
 	add	eax, eax
 	lea	edx, 1[rax]
@@ -1610,8 +1696,13 @@ pancake_fifteen:
 	add	DWORD PTR -40[rbp], 1
 	jmp	.L102
 .L105:
-	lea	rax, apple[rip+9]
-	mov	rdi, rax
+#	lea	rax, apple[rip+18]
+	lea	rax, apple[rip]
+	call .L199
+
+	push rax
+	pop rdi
+#	mov	rdi, rax
 	call	atoi@PLT
 	imul	eax, DWORD PTR -28[rbp]
 	lea	edx, [rax+rax]
@@ -1622,8 +1713,13 @@ pancake_fifteen:
 	add	DWORD PTR -40[rbp], 1
 	jmp	.L102
 .L106:
-	lea	rax, apple[rip+9]
-	mov	rdi, rax
+#	lea	rax, apple[rip+18]
+	lea	rax, apple[rip]
+	call .L199
+
+	push rax
+	pop rdi
+#	mov	rdi, rax
 	call	atoi@PLT
 	imul	eax, DWORD PTR -28[rbp]
 	add	eax, eax
@@ -1646,45 +1742,19 @@ pancake_fifteen:
 	add	eax, edx
 	mov	rbx, QWORD PTR -8[rbp]
 	leave
-.L108: 
+.L199:
 	push rbp 
     mov rbp, rsp
-	call .L180
-	lea eax, [eax+0x0f] 
+	lea rax, [rax+18]
 	leave
 	ret
-.L180: 
+.L1200: 
 	push rbp 
     mov rbp, rsp
-	lea eax, [eax+0x0a] 
+	lea rax, [rax+6]
 	leave
 	ret
-.L109: 
-	push rbp 
-    mov rbp, rsp
-	lea eax, [eax-0x0a] 
-	leave
-	ret
-.L181:
-	push rbp 
-    mov rbp, rsp
-	lea eax, [eax+0x03]
-	leave
-	ret
-.L190: 
-	push rbp 
-    mov rbp, rsp
-	call .L180
-	call .L180
-	lea eax, [eax+0x03]
-	leave
-	ret
-.L191:
-	push rbp 
-    mov rbp, rsp
-	lea eax, [eax-0x05]
-	leave
-	ret
+
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc
@@ -1815,8 +1885,7 @@ pancake_twenty:
 	mov	rax, QWORD PTR -64[rbp]
 	mov	DWORD PTR [rax], edx
 	mov	DWORD PTR -28[rbp], 0
-	push .L119
-	ret
+	jmp	.L119
 .L122:
 	mov	rax, QWORD PTR -64[rbp]
 	mov	eax, DWORD PTR [rax]
@@ -1873,10 +1942,124 @@ pancake_twenty:
 	.cfi_endproc
 .LFE21:
 	.size	pancake_twenty, .-pancake_twenty
+	.globl	pancake_sixnine
+	.type	pancake_sixnine, @function
+pancake_sixnine:
+.LFB22:
+	.cfi_startproc
+	endbr64
+	push	rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	mov	rbp, rsp
+	.cfi_def_cfa_register 6
+	push	rbx
+	sub	rsp, 88
+	.cfi_offset 3, -24
+	mov	rax, QWORD PTR fs:40
+	mov	QWORD PTR -24[rbp], rax
+	xor	eax, eax
+	mov	DWORD PTR -96[rbp], 3
+	nop
+	jmp	.L128
+.L137:
+	cmp	DWORD PTR -96[rbp], 5
+	ja	.L128
+	mov	eax, DWORD PTR -96[rbp]
+	lea	rdx, 0[0+rax*4]
+	lea	rax, .L130[rip]
+	mov	eax, DWORD PTR [rdx+rax]
+	cdqe
+	lea	rdx, .L130[rip]
+	add	rax, rdx
+	notrack jmp	rax
+	.section	.rodata
+	.align 4
+	.align 4
+.L130:
+	.long	.L128-.L130
+	.long	.L134-.L130
+	.long	.L133-.L130
+	.long	.L132-.L130
+	.long	.L131-.L130
+	.long	.L129-.L130
+	.text
+.L134:
+	mov	eax, DWORD PTR -60[rbp]
+	add	eax, 115
+	mov	DWORD PTR -92[rbp], eax
+	mov	DWORD PTR -96[rbp], 4
+	jmp	.L128
+.L133:
+	mov	eax, DWORD PTR -92[rbp]
+	xor	eax, -559038737
+	and	eax, -16
+	or	eax, 14
+	mov	DWORD PTR -92[rbp], eax
+	mov	eax, DWORD PTR -92[rbp]
+	sal	eax, 2
+	and	eax, 63
+	add	eax, 195
+	mov	DWORD PTR -92[rbp], eax
+	mov	DWORD PTR -96[rbp], 0
+	jmp	.L128
+.L132:
+	mov	edi, 0
+	call	time@PLT
+	mov	QWORD PTR -88[rbp], rax
+	lea	rax, -88[rbp]
+	mov	rdi, rax
+	call	localtime@PLT
+	mov	rcx, QWORD PTR [rax]
+	mov	rbx, QWORD PTR 8[rax]
+	mov	QWORD PTR -80[rbp], rcx
+	mov	QWORD PTR -72[rbp], rbx
+	mov	rcx, QWORD PTR 16[rax]
+	mov	rbx, QWORD PTR 24[rax]
+	mov	QWORD PTR -64[rbp], rcx
+	mov	QWORD PTR -56[rbp], rbx
+	mov	rcx, QWORD PTR 32[rax]
+	mov	rbx, QWORD PTR 40[rax]
+	mov	QWORD PTR -48[rbp], rcx
+	mov	QWORD PTR -40[rbp], rbx
+	mov	rax, QWORD PTR 48[rax]
+	mov	QWORD PTR -32[rbp], rax
+	mov	DWORD PTR -96[rbp], 1
+	jmp	.L128
+.L131:
+	cmp	DWORD PTR -92[rbp], 0
+	je	.L135
+	mov	DWORD PTR -96[rbp], 2
+	jmp	.L128
+.L135:
+	mov	DWORD PTR -96[rbp], 5
+	jmp	.L128
+.L129:
+	mov	eax, DWORD PTR -92[rbp]
+	sar	eax, 2
+	and	eax, 93
+	add	eax, 420
+	mov	DWORD PTR -92[rbp], eax
+.L128:
+	cmp	DWORD PTR -96[rbp], 0
+	jne	.L137
+	mov	eax, DWORD PTR -92[rbp]
+	mov	rdx, QWORD PTR -24[rbp]
+	sub	rdx, QWORD PTR fs:40
+	je	.L139
+	call	__stack_chk_fail@PLT
+.L139:
+	mov	rbx, QWORD PTR -8[rbp]
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE22:
+	.size	pancake_sixnine, .-pancake_sixnine
 	.globl	pancake_twentyfive
 	.type	pancake_twentyfive, @function
 pancake_twentyfive:
-.LFB22:
+.LFB23:
 	.cfi_startproc
 	endbr64
 	push	rbp
@@ -1890,10 +2073,10 @@ pancake_twentyfive:
 	mov	QWORD PTR -24[rbp], rdi
 	mov	DWORD PTR -28[rbp], esi
 	cmp	QWORD PTR -24[rbp], 0
-	jne	.L127
+	jne	.L141
 	mov	eax, 1
-	jmp	.L128
-.L127:
+	jmp	.L142
+.L141:
 	mov	rax, QWORD PTR -24[rbp]
 	movzx	eax, WORD PTR [rax]
 	movsx	ebx, ax
@@ -1906,18 +2089,18 @@ pancake_twentyfive:
 	call	pancake_twentyfive
 	xor	eax, ebx
 	imul	eax, DWORD PTR -28[rbp]
-.L128:
+.L142:
 	mov	rbx, QWORD PTR -8[rbp]
 	leave
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc
-.LFE22:
+.LFE23:
 	.size	pancake_twentyfive, .-pancake_twentyfive
 	.globl	pancake_eighteen
 	.type	pancake_eighteen, @function
 pancake_eighteen:
-.LFB23:
+.LFB24:
 	.cfi_startproc
 	endbr64
 	push	rbp
@@ -1931,7 +2114,7 @@ pancake_eighteen:
 	mov	rax, QWORD PTR -56[rbp]
 	mov	rdi, rax
 	call	pancake_four
-	mov	DWORD PTR -32[rbp], eax
+	mov	DWORD PTR -40[rbp], eax
 	mov	edi, 16
 	call	malloc@PLT
 	mov	QWORD PTR -8[rbp], rax
@@ -1946,36 +2129,36 @@ pancake_eighteen:
 	mov	QWORD PTR -24[rbp], rax
 	mov	rax, QWORD PTR -8[rbp]
 	mov	QWORD PTR -16[rbp], rax
-	mov	DWORD PTR -40[rbp], 1
-	jmp	.L130
-.L140:
-	mov	DWORD PTR -36[rbp], 3
+	mov	DWORD PTR -48[rbp], 1
+	jmp	.L144
+.L154:
+	mov	DWORD PTR -44[rbp], 3
 	nop
-	jmp	.L132
-.L139:
-	cmp	DWORD PTR -36[rbp], 5
-	ja	.L132
-	mov	eax, DWORD PTR -36[rbp]
+	jmp	.L146
+.L153:
+	cmp	DWORD PTR -44[rbp], 5
+	ja	.L146
+	mov	eax, DWORD PTR -44[rbp]
 	lea	rdx, 0[0+rax*4]
-	lea	rax, .L134[rip]
+	lea	rax, .L148[rip]
 	mov	eax, DWORD PTR [rdx+rax]
 	cdqe
-	lea	rdx, .L134[rip]
+	lea	rdx, .L148[rip]
 	add	rax, rdx
 	notrack jmp	rax
 	.section	.rodata
 	.align 4
 	.align 4
-.L134:
-	.long	.L132-.L134
-	.long	.L138-.L134
-	.long	.L137-.L134
-	.long	.L136-.L134
-	.long	.L135-.L134
-	.long	.L133-.L134
+.L148:
+	.long	.L146-.L148
+	.long	.L152-.L148
+	.long	.L151-.L148
+	.long	.L150-.L148
+	.long	.L149-.L148
+	.long	.L147-.L148
 	.text
-.L138:
-	mov	eax, DWORD PTR -40[rbp]
+.L152:
+	mov	eax, DWORD PTR -48[rbp]
 	movsx	rdx, eax
 	mov	rax, QWORD PTR -56[rbp]
 	add	rax, rdx
@@ -1983,54 +2166,70 @@ pancake_eighteen:
 	movsx	dx, al
 	mov	rax, QWORD PTR -16[rbp]
 	mov	WORD PTR [rax], dx
-	mov	DWORD PTR -36[rbp], 4
-	jmp	.L132
-.L137:
+	mov	DWORD PTR -44[rbp], 4
+	jmp	.L146
+.L151:
 	mov	rax, QWORD PTR -24[rbp]
 	mov	rdx, QWORD PTR -16[rbp]
 	mov	QWORD PTR 8[rax], rdx
-	mov	DWORD PTR -36[rbp], 5
-	jmp	.L132
-.L136:
+	mov	DWORD PTR -44[rbp], 5
+	jmp	.L146
+.L150:
 	mov	edi, 16
 	call	malloc@PLT
 	mov	QWORD PTR -16[rbp], rax
-	mov	DWORD PTR -36[rbp], 1
-	jmp	.L132
-.L135:
+	mov	DWORD PTR -44[rbp], 1
+	jmp	.L146
+.L149:
 	mov	rax, QWORD PTR -16[rbp]
 	mov	QWORD PTR 8[rax], 0
-	mov	DWORD PTR -36[rbp], 2
-	jmp	.L132
-.L133:
+	mov	DWORD PTR -44[rbp], 2
+	jmp	.L146
+.L147:
 	mov	rax, QWORD PTR -24[rbp]
 	mov	rax, QWORD PTR 8[rax]
 	mov	QWORD PTR -24[rbp], rax
-	mov	DWORD PTR -36[rbp], 0
+	mov	DWORD PTR -44[rbp], 0
 	nop
-.L132:
-	cmp	DWORD PTR -36[rbp], 0
-	jne	.L139
-	add	DWORD PTR -40[rbp], 1
-.L130:
-	mov	eax, DWORD PTR -40[rbp]
-	cmp	eax, DWORD PTR -32[rbp]
-	jl	.L140
-	mov	DWORD PTR -28[rbp], 1
-	mov	edx, DWORD PTR -28[rbp]
+.L146:
+	cmp	DWORD PTR -44[rbp], 0
+	jne	.L153
+	add	DWORD PTR -48[rbp], 1
+.L144:
+	mov	eax, DWORD PTR -48[rbp]
+	cmp	eax, DWORD PTR -40[rbp]
+	jl	.L154
+	mov	DWORD PTR -36[rbp], 1
+	mov	eax, 0
+	call	pancake_sixnine
+	mov	DWORD PTR -32[rbp], eax
+	mov	edx, DWORD PTR -36[rbp]
 	mov	rax, QWORD PTR -8[rbp]
 	mov	esi, edx
 	mov	rdi, rax
 	call	pancake_twentyfive
-	lea	edx, -11983[rax]
-	mov	rax, QWORD PTR -64[rbp]
-	mov	DWORD PTR [rax], edx
+	sub	eax, 11983
+	mov	DWORD PTR -28[rbp], eax
+	mov	eax, DWORD PTR -32[rbp]
+	sub	eax, 132
+	add	eax, eax
+	mov	DWORD PTR -32[rbp], eax
+	mov	eax, DWORD PTR -28[rbp]
+	cmp	eax, DWORD PTR -32[rbp]
+	jne	.L155
+	mov	eax, DWORD PTR -28[rbp]
+	jmp	.L156
+.L155:
+	mov	eax, 0
+.L156:
+	mov	rdx, QWORD PTR -64[rbp]
+	mov	DWORD PTR [rdx], eax
 	nop
 	leave
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc
-.LFE23:
+.LFE24:
 	.size	pancake_eighteen, .-pancake_eighteen
 	.section	.rodata
 .LC2:
@@ -2050,7 +2249,7 @@ pancake_eighteen:
 	.globl	main
 	.type	main, @function
 main:
-.LFB24:
+.LFB25:
 	.cfi_startproc
 	endbr64
 	push	rbp
@@ -2087,10 +2286,10 @@ main:
 	mov	rdi, rax
 	call	pancake_four
 	cmp	eax, 16
-	jne	.L142
+	jne	.L158
 	mov	DWORD PTR -184[rbp], 0
-	jmp	.L143
-.L144:
+	jmp	.L159
+.L160:
 	mov	eax, DWORD PTR -184[rbp]
 	cdqe
 	movzx	edx, BYTE PTR -112[rbp+rax]
@@ -2098,9 +2297,9 @@ main:
 	cdqe
 	mov	BYTE PTR -129[rbp+rax], dl
 	add	DWORD PTR -184[rbp], 1
-.L143:
+.L159:
 	cmp	DWORD PTR -184[rbp], 4
-	jle	.L144
+	jle	.L160
 	mov	BYTE PTR -124[rbp], 0
 	lea	rdx, -188[rbp]
 	lea	rax, -129[rbp]
@@ -2108,8 +2307,8 @@ main:
 	mov	rdi, rax
 	call	pancake_eighteen
 	mov	DWORD PTR -180[rbp], 5
-	jmp	.L145
-.L146:
+	jmp	.L161
+.L162:
 	mov	eax, DWORD PTR -180[rbp]
 	lea	ecx, -5[rax]
 	mov	eax, DWORD PTR -180[rbp]
@@ -2118,9 +2317,9 @@ main:
 	movsx	rax, ecx
 	mov	BYTE PTR -124[rbp+rax], dl
 	add	DWORD PTR -180[rbp], 1
-.L145:
+.L161:
 	cmp	DWORD PTR -180[rbp], 10
-	jle	.L146
+	jle	.L162
 	mov	BYTE PTR -118[rbp], 0
 	lea	rdx, -196[rbp]
 	lea	rax, -124[rbp]
@@ -2128,8 +2327,8 @@ main:
 	mov	rdi, rax
 	call	pancake_twenty
 	mov	DWORD PTR -176[rbp], 11
-	jmp	.L147
-.L148:
+	jmp	.L163
+.L164:
 	mov	eax, DWORD PTR -176[rbp]
 	lea	ecx, -11[rax]
 	mov	eax, DWORD PTR -176[rbp]
@@ -2138,9 +2337,9 @@ main:
 	movsx	rax, ecx
 	mov	BYTE PTR -118[rbp+rax], dl
 	add	DWORD PTR -176[rbp], 1
-.L147:
+.L163:
 	cmp	DWORD PTR -176[rbp], 15
-	jle	.L148
+	jle	.L164
 	mov	BYTE PTR -112[rbp], 0
 	lea	rdx, -192[rbp]
 	lea	rax, -118[rbp]
@@ -2148,18 +2347,18 @@ main:
 	mov	rdi, rax
 	call	pancake_fifteen
 	mov	DWORD PTR -172[rbp], eax
-	movzx	eax, BYTE PTR grape[rip+3]
-	movsx	eax, al
-	movzx	edx, BYTE PTR apple[rip+2]
-	movsx	edx, dl
+	movzx	eax, WORD PTR grape[rip+6]
+	cwde
+	movzx	edx, WORD PTR apple[rip+4]
+	movsx	edx, dx
 	sub	eax, edx
 	mov	esi, eax
-	movzx	eax, BYTE PTR tomato[rip+3]
-	movsx	eax, al
-	movzx	edx, BYTE PTR grape[rip+2]
-	movsx	edx, dl
-	movzx	ecx, BYTE PTR apple[rip+2]
-	movsx	edi, cl
+	movzx	eax, WORD PTR tomato[rip+6]
+	cwde
+	movzx	edx, WORD PTR grape[rip+4]
+	movsx	edx, dx
+	movzx	ecx, WORD PTR apple[rip+4]
+	movsx	edi, cx
 	mov	ecx, edx
 	sub	ecx, edi
 	cdq
@@ -2167,32 +2366,32 @@ main:
 	mov	eax, esi
 	sub	eax, edx
 	cmp	DWORD PTR -172[rbp], eax
-	jge	.L149
+	jge	.L165
 	lea	rax, .LC4[rip]
 	mov	rdi, rax
 	call	puts@PLT
 	mov	eax, 0
-	jmp	.L155
-.L149:
+	jmp	.L171
+.L165:
 	mov	rax, QWORD PTR -168[rbp]
 	mov	rdi, rax
 	call	pancake_seven
 	mov	QWORD PTR -152[rbp], rax
 	mov	eax, DWORD PTR -196[rbp]
 	test	eax, eax
-	je	.L151
+	je	.L167
 	mov	eax, DWORD PTR -192[rbp]
 	test	eax, eax
-	je	.L151
+	je	.L167
 	mov	eax, DWORD PTR -188[rbp]
 	test	eax, eax
-	jne	.L152
-.L151:
+	jne	.L168
+.L167:
 	lea	rax, .LC5[rip]
 	mov	rdi, rax
 	call	puts@PLT
-	jmp	.L154
-.L152:
+	jmp	.L170
+.L168:
 	mov	ecx, DWORD PTR -192[rbp]
 	mov	edx, DWORD PTR -196[rbp]
 	mov	esi, DWORD PTR -188[rbp]
@@ -2206,24 +2405,24 @@ main:
 	mov	rdi, rax
 	mov	eax, 0
 	call	printf@PLT
-	jmp	.L154
-.L142:
+	jmp	.L170
+.L158:
 	lea	rax, .LC7[rip]
 	mov	rdi, rax
 	call	puts@PLT
-.L154:
+.L170:
 	mov	eax, 0
-.L155:
+.L171:
 	mov	rdx, QWORD PTR -8[rbp]
 	sub	rdx, QWORD PTR fs:40
-	je	.L156
+	je	.L172
 	call	__stack_chk_fail@PLT
-.L156:
+.L172:
 	leave
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc
-.LFE24:
+.LFE25:
 	.size	main, .-main
 	.ident	"GCC: (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0"
 	.section	.note.GNU-stack,"",@progbits
